@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "exactOptionalPropertyTypes": true,
+    "noUncheckedIndexedAccess": true
+  },
+  "fmt": {
+    "proseWrap": "preserve"
+  }
+}
