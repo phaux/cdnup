@@ -8,7 +8,7 @@ import { checkUpdate, RELEASE_TYPES } from "./checkUpdate.ts";
 
 const urlRegexp = /\bhttps?:\/\/[\w\d.-]+\/[\w\d!#%&*?@^<=>/[\]:.~+-]+/dgi;
 
-export async function* updateDir(
+export async function* listDirUpdates(
   rootPath: string,
   maxRelease: (typeof RELEASE_TYPES)[number],
 ) {
@@ -18,10 +18,10 @@ export async function* updateDir(
   });
   yield* AsyncIterableX.from(walker)
     .pipe(tap((entry) => info(`Checking file ${entry.path}`)))
-    .pipe(flatMap((entry) => updateFile(entry.path, maxRelease)));
+    .pipe(flatMap((entry) => listFileUpdates(entry.path, maxRelease)));
 }
 
-async function* updateFile(
+async function* listFileUpdates(
   filePath: string,
   maxRelease: (typeof RELEASE_TYPES)[number],
 ) {

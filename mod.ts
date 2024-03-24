@@ -6,8 +6,8 @@ import { setup } from "https://deno.land/std@0.220.1/log/setup.ts";
 import { format } from "https://deno.land/std@0.220.1/semver/format.ts";
 import MagicString from "https://esm.sh/magic-string@0.30.8";
 import { z } from "https://esm.sh/zod@3.22.4";
-import { RELEASE_TYPES } from "./checkUpdate.ts";
-import { updateDir } from "./listUpdates.ts";
+import { checkUpdate, RELEASE_TYPES } from "./checkUpdate.ts";
+import { listDirUpdates } from "./listUpdates.ts";
 
 // fmt-ignore
 const helpText = `
@@ -69,7 +69,7 @@ if (import.meta.main) {
   if (options.help) {
     console.log(helpText);
   } else {
-    const updates = await Array.fromAsync(updateDir(
+    const updates = await Array.fromAsync(listDirUpdates(
       String(options._[0] ?? "."),
       maxUpdate ?? "major",
     ));
@@ -118,3 +118,5 @@ if (import.meta.main) {
     }
   }
 }
+
+export { checkUpdate, listDirUpdates };
