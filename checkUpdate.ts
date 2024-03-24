@@ -1,8 +1,8 @@
-import { format } from "https://deno.land/std@0.218.2/semver/format.ts";
-import { lessOrEqual } from "https://deno.land/std@0.218.2/semver/less_or_equal.ts";
-import { parse } from "https://deno.land/std@0.218.2/semver/parse.ts";
-import { error } from "https://deno.land/std@0.219.1/log/error.ts";
-import { info, warn } from "https://deno.land/std@0.219.1/log/mod.ts";
+import { error } from "https://deno.land/std@0.220.1/log/error.ts";
+import { info, warn } from "https://deno.land/std@0.220.1/log/mod.ts";
+import { format } from "https://deno.land/std@0.220.1/semver/format.ts";
+import { lessOrEqual } from "https://deno.land/std@0.220.1/semver/less_or_equal.ts";
+import { parse } from "https://deno.land/std@0.220.1/semver/parse.ts";
 import memoize from "https://esm.sh/memoizee@0.4.15";
 import tryCatch from "https://esm.sh/ramda@0.29.1/src/tryCatch";
 import { match } from "https://esm.sh/ts-pattern@5.0.8";

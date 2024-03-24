@@ -1,10 +1,9 @@
-import { groupBy } from "https://deno.land/std@0.202.0/collections/group_by.ts";
-import { parse } from "https://deno.land/std@0.203.0/flags/mod.ts";
-import { sortBy } from "https://deno.land/std@0.205.0/collections/sort_by.ts";
-import { format } from "https://deno.land/std@0.218.2/semver/format.ts";
-import { bold, underline } from "https://deno.land/std@0.219.1/fmt/colors.ts";
-import { info } from "https://deno.land/std@0.219.1/log/info.ts";
-import { setup } from "https://deno.land/std@0.219.1/log/setup.ts";
+import { parseArgs } from "https://deno.land/std@0.220.1/cli/parse_args.ts";
+import { sortBy } from "https://deno.land/std@0.220.1/collections/sort_by.ts";
+import { bold, underline } from "https://deno.land/std@0.220.1/fmt/colors.ts";
+import { info } from "https://deno.land/std@0.220.1/log/info.ts";
+import { setup } from "https://deno.land/std@0.220.1/log/setup.ts";
+import { format } from "https://deno.land/std@0.220.1/semver/format.ts";
 import MagicString from "https://esm.sh/magic-string@0.30.8";
 import { z } from "https://esm.sh/zod@3.22.4";
 import { RELEASE_TYPES } from "./checkUpdate.ts";
@@ -44,14 +43,7 @@ ${bold(`OPTIONS`)}
 `;
 
 if (import.meta.main) {
-  const options = z.object({
-    _: z.array(z.string()),
-    help: z.boolean().optional(),
-    interactive: z.boolean().optional(),
-    verbose: z.boolean().optional(),
-    write: z.boolean().optional(),
-    maxUpdate: z.enum(RELEASE_TYPES).optional(),
-  }).parse(parse(Deno.args, {
+  const options = parseArgs(Deno.args, {
     boolean: ["help", "interactive", "verbose", "write"],
     string: ["filterRelease", "maxUpdate"],
     alias: {
@@ -61,7 +53,9 @@ if (import.meta.main) {
       write: ["w"],
       maxUpdate: ["max-update", "u"],
     },
-  }));
+  });
+
+  const maxUpdate = z.enum(RELEASE_TYPES).optional().parse(options.maxUpdate);
 
   setup({
     loggers: {
@@ -72,17 +66,15 @@ if (import.meta.main) {
     },
   });
 
-  info(`Options: ${JSON.stringify(options)}`);
-
   if (options.help) {
     console.log(helpText);
   } else {
     const updates = await Array.fromAsync(updateDir(
-      options._[0] ?? ".",
-      options.maxUpdate ?? "major",
+      String(options._[0] ?? "."),
+      maxUpdate ?? "major",
     ));
 
-    const sortedUpdates = groupBy(
+    const sortedUpdates = Map.groupBy(
       sortBy(
         updates,
         (update) => `${update.filePath}:${update.start?.line}`,
@@ -91,10 +83,10 @@ if (import.meta.main) {
     );
 
     info(
-      `Found ${updates.length} updates in ${Object.keys(sortedUpdates)} files.`,
+      `Found ${updates.length} updates in ${sortedUpdates.size} files.`,
     );
 
-    for (const [filePath, fileUpdates] of Object.entries(sortedUpdates)) {
+    for (const [filePath, fileUpdates] of sortedUpdates.entries()) {
       if (!fileUpdates?.length) continue;
 
       const fileText = new MagicString(

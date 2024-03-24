@@ -1,8 +1,8 @@
-import { walk } from "https://deno.land/std@0.219.1/fs/walk.ts";
-import { info } from "https://deno.land/std@0.219.1/log/info.ts";
-import { AsyncIterableX } from "https://esm.sh/ix@5.0.0/asynciterable/asynciterablex?dev";
-import { flatMap } from "https://esm.sh/ix@5.0.0/asynciterable/operators/flatmap?dev";
-import { tap } from "https://esm.sh/ix@5.0.0/asynciterable/operators/tap?dev";
+import { walk } from "https://deno.land/std@0.220.1/fs/walk.ts";
+import { info } from "https://deno.land/std@0.220.1/log/info.ts";
+import { AsyncIterableX } from "https://esm.sh/ix@5.0.0/asynciterable/asynciterablex";
+import { flatMap } from "https://esm.sh/ix@5.0.0/asynciterable/operators/flatmap";
+import { tap } from "https://esm.sh/ix@5.0.0/asynciterable/operators/tap";
 import { LinesAndColumns } from "https://esm.sh/lines-and-columns@2.0.4";
 import { checkUpdate, RELEASE_TYPES } from "./checkUpdate.ts";
 
@@ -16,9 +16,7 @@ export async function* updateDir(
     includeDirs: false,
     exts: ["html", "css", "js", "jsx", "ts", "tsx", "json"],
   });
-  yield* AsyncIterableX.from(
-    walker,
-  )
+  yield* AsyncIterableX.from(walker)
     .pipe(tap((entry) => info(`Checking file ${entry.path}`)))
     .pipe(flatMap((entry) => updateFile(entry.path, maxRelease)));
 }
