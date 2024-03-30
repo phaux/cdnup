@@ -3,6 +3,7 @@ import { info, warn } from "https://deno.land/std@0.220.1/log/mod.ts";
 import { format } from "https://deno.land/std@0.220.1/semver/format.ts";
 import { lessOrEqual } from "https://deno.land/std@0.220.1/semver/less_or_equal.ts";
 import { parse } from "https://deno.land/std@0.220.1/semver/parse.ts";
+import { SemVer } from "https://deno.land/std@0.220.1/semver/types.ts";
 import memoize from "https://esm.sh/memoizee@0.4.15";
 import tryCatch from "https://esm.sh/ramda@0.29.1/src/tryCatch";
 import { match } from "https://esm.sh/ts-pattern@5.0.8";
@@ -12,11 +13,20 @@ export const RELEASE_TYPES = ["patch", "minor", "major"] as const;
 const versionRegexp =
   /@(?<range>(?:\^|~|<=?|==?)?v?(?<version>(?:\d+|[*x])(?:\.(?:\d+|[*x])){0,2}(?:-[\w\d_.+-]+)?))(?=\W|$)/di;
 
-export const checkUpdate = memoize(
-  async function checkUpdate(
+export interface CdnUpdate {
+  baseUrl: string;
+  url: string;
+  latestUrl: string;
+  version: SemVer;
+  latestVersion: SemVer;
+  release: string;
+}
+
+export const checkCdnUpdate = memoize(
+  async function checkCdnUpdate(
     url: string,
     maxRelease: (typeof RELEASE_TYPES)[number],
-  ) {
+  ): Promise<CdnUpdate | null> {
     // parse current version from url
     const versionMatch = url.match(versionRegexp);
     if (versionMatch?.groups?.version == null) return null;

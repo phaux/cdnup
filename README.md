@@ -17,10 +17,6 @@ deno run --allow-read --allow-net [--allow-write] \
 
   Print this help message and exit.
 
-- `-i`, `--interactive`
-
-  Run in interactive mode. Ask for confirmation before updating each import.
-
 - `-v`, `--verbose`
 
   Print debug information.
@@ -28,6 +24,10 @@ deno run --allow-read --allow-net [--allow-write] \
 - `-w`, `--write`
 
   Write the latest found versions to the files.
+
+- `-i`, `--interactive`
+
+  Run in interactive mode. Ask for confirmation before writing each change.
 
 - `-u`, `--max-update RELEASE`
 
