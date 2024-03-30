@@ -1,6 +1,6 @@
-import { sortBy } from "https://deno.land/std@0.220.1/collections/sort_by.ts";
-import { info } from "https://deno.land/std@0.220.1/log/info.ts";
-import { format } from "https://deno.land/std@0.220.1/semver/format.ts";
+import { sortBy } from "https://deno.land/std@0.221.0/collections/sort_by.ts";
+import { info } from "https://deno.land/std@0.221.0/log/info.ts";
+import { format } from "https://deno.land/std@0.221.0/semver/format.ts";
 import MagicString from "https://esm.sh/magic-string@0.30.8";
 import { UpdateEntry } from "./listUpdates.ts";
 

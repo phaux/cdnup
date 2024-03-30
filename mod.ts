@@ -1,6 +1,6 @@
-import { parseArgs } from "https://deno.land/std@0.220.1/cli/parse_args.ts";
-import { bold, underline } from "https://deno.land/std@0.220.1/fmt/colors.ts";
-import { setup } from "https://deno.land/std@0.220.1/log/setup.ts";
+import { parseArgs } from "https://deno.land/std@0.221.0/cli/parse_args.ts";
+import { bold, underline } from "https://deno.land/std@0.221.0/fmt/colors.ts";
+import { setup } from "https://deno.land/std@0.221.0/log/setup.ts";
 import { z } from "https://esm.sh/zod@3.22.4";
 import { CdnUpdate, checkCdnUpdate, RELEASE_TYPES } from "./checkCdnUpdate.ts";
 import { listDirUpdates, listFileUpdates, UpdateEntry } from "./listUpdates.ts";

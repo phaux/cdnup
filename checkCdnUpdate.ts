@@ -1,9 +1,9 @@
-import { error } from "https://deno.land/std@0.220.1/log/error.ts";
-import { info, warn } from "https://deno.land/std@0.220.1/log/mod.ts";
-import { format } from "https://deno.land/std@0.220.1/semver/format.ts";
-import { lessOrEqual } from "https://deno.land/std@0.220.1/semver/less_or_equal.ts";
-import { parse } from "https://deno.land/std@0.220.1/semver/parse.ts";
-import { SemVer } from "https://deno.land/std@0.220.1/semver/types.ts";
+import { error } from "https://deno.land/std@0.221.0/log/error.ts";
+import { info, warn } from "https://deno.land/std@0.221.0/log/mod.ts";
+import { format } from "https://deno.land/std@0.221.0/semver/format.ts";
+import { lessOrEqual } from "https://deno.land/std@0.221.0/semver/less_or_equal.ts";
+import { parse } from "https://deno.land/std@0.221.0/semver/parse.ts";
+import { SemVer } from "https://deno.land/std@0.221.0/semver/types.ts";
 import memoize from "https://esm.sh/memoizee@0.4.15";
 import tryCatch from "https://esm.sh/ramda@0.29.1/src/tryCatch";
 import { match } from "https://esm.sh/ts-pattern@5.0.8";
