@@ -7,8 +7,7 @@ It works by requesting every URL without version and expects a redirect to the l
 ## Synopsis
 
 ```sh
-deno run --allow-read --allow-net [--allow-write] \
-    https://deno.land/x/cdnup/mod.ts [OPTION]... [DIRECTORY]
+deno run https://deno.land/x/cdnup/mod.ts [OPTION]... [DIRECTORY]
 ```
 
 ## Options

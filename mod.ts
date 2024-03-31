@@ -12,8 +12,7 @@ ${bold(`NAME`)}
   cdnup - Check for outdated imports from CDNs in your project
 
 ${bold(`SYNOPSIS`)}
-  ${bold(`deno`)} run ${underline(`--allow-read`)} ${underline(`--allow-net`)} [${underline(`--allow-write`)}] \\
-    ${bold(`https://deno.land/x/cdnup/mod.ts`)} [${underline(`OPTION`)}]... [${underline(`DIRECTORY`)}]
+  ${bold(`deno`)} run ${bold(`https://deno.land/x/cdnup/mod.ts`)} [${underline(`OPTION`)}]... [${underline(`DIRECTORY`)}]
 
 ${bold(`OPTIONS`)}
   ${bold(`-h`)}, ${bold(`--help`)}
