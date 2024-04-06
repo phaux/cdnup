@@ -1,4 +1,5 @@
 import { walk } from "https://deno.land/std@0.221.0/fs/walk.ts";
+import { error } from "https://deno.land/std@0.221.0/log/error.ts";
 import { info } from "https://deno.land/std@0.221.0/log/info.ts";
 import { AsyncIterableX } from "https://esm.sh/ix@5.0.0/asynciterable/asynciterablex";
 import { flatMap } from "https://esm.sh/ix@5.0.0/asynciterable/operators/flatmap";
@@ -10,6 +11,16 @@ import {
 import { CdnUpdate, checkCdnUpdate, RELEASE_TYPES } from "./checkCdnUpdate.ts";
 
 const urlRegexp = /\bhttps?:\/\/[\w\d.-]+\/[\w\d!#%&*?@^<=>/[\]:.~+-]+/dgi;
+export const defaultExtensions = [
+  "html",
+  "css",
+  "js",
+  "jsx",
+  "ts",
+  "tsx",
+  "json",
+];
+export const defaultIgnorePatterns = [/^node_modules$/, /^\.git$/];
 
 export interface UpdateEntry {
   update: CdnUpdate;
@@ -17,25 +28,48 @@ export interface UpdateEntry {
   startIndex: number;
   endIndex: number;
   start: SourceLocation;
-  end: SourceLocation;
+}
+
+export interface ListUpdatesOptions {
+  maxUpdate?: (typeof RELEASE_TYPES)[number] | undefined;
+  extensions?: string[] | undefined;
+  ignorePatterns?: RegExp[] | undefined;
+}
+
+export async function* listUpdates(
+  paths: string[],
+  options?: ListUpdatesOptions,
+) {
+  yield* AsyncIterableX.from(paths)
+    .pipe(flatMap(async function* (path) {
+      const stat = await Deno.stat(path);
+      if (stat.isDirectory) {
+        yield* listDirUpdates(path, options);
+      } else if (stat.isFile) {
+        yield* listFileUpdates(path, options?.maxUpdate);
+      } else {
+        error(`Skipping ${path}`);
+      }
+    }));
 }
 
 export async function* listDirUpdates(
   rootPath: string,
-  maxRelease: (typeof RELEASE_TYPES)[number],
+  options?: ListUpdatesOptions,
 ): AsyncGenerator<UpdateEntry, void, undefined> {
   const walker = walk(rootPath, {
     includeDirs: false,
-    exts: ["html", "css", "js", "jsx", "ts", "tsx", "json"],
+    exts: [...defaultExtensions, ...options?.extensions ?? []],
+    skip: [...defaultIgnorePatterns, ...options?.ignorePatterns ?? []],
   });
   yield* AsyncIterableX.from(walker)
     .pipe(tap((entry) => info(`Checking file ${entry.path}`)))
-    .pipe(flatMap((entry) => listFileUpdates(entry.path, maxRelease)));
+    .pipe(flatMap((entry) => listFileUpdates(entry.path, options?.maxUpdate)));
 }
 
 export async function* listFileUpdates(
   filePath: string,
-  maxRelease: (typeof RELEASE_TYPES)[number],
+  maxUpdate: (typeof RELEASE_TYPES)[number] = "major",
 ): AsyncGenerator<UpdateEntry, void, undefined> {
   const fileText = await Deno.readTextFile(filePath);
   const lines = new LinesAndColumns(fileText);
@@ -45,12 +79,11 @@ export async function* listFileUpdates(
     .pipe(flatMap(async function* (urlMatch) {
       const [url] = urlMatch;
       info(`Checking url ${url}`);
-      const update = await checkCdnUpdate(url, maxRelease);
+      const update = await checkCdnUpdate(url, maxUpdate);
       if (update) {
         const [startIndex, endIndex] = urlMatch.indices![0]!;
         const start = lines.locationForIndex(startIndex)!;
-        const end = lines.locationForIndex(endIndex)!;
-        yield { filePath, startIndex, endIndex, start, end, update };
+        yield { filePath, startIndex, endIndex, start, update };
       }
     }));
 }

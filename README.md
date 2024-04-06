@@ -7,33 +7,22 @@ It works by requesting every URL without version and expects a redirect to the l
 ## Synopsis
 
 ```sh
-deno run https://deno.land/x/cdnup/mod.ts [OPTION]... [DIRECTORY]
+deno run https://deno.land/x/cdnup/mod.ts [OPTION]... [PATH]...
 ```
+
+## Description
+
+Checks every file in `PATH` for outdated imports from CDNs.
+If `PATH` is a directory, it will be walked recursively.
+When not specified, the current directory is checked recursively.
 
 ## Options
 
-- `-h`, `--help`
-
-  Print this help message and exit.
-
-- `-v`, `--verbose`
-
-  Print debug information.
-
-- `-w`, `--write`
-
-  Write the latest found versions to the files.
-
-- `-i`, `--interactive`
-
-  Run in interactive mode. Ask for confirmation before writing each change.
-
-- `-u`, `--max-update RELEASE`
-
-  Try to find updates up to the specified release type.
-  This doesn't work for all CDNs.
-  Possible values are: patch, minor, major.
-  Default: major.
+- `-w`, `--write`: Write the latest found versions to the files.
+- `-i`, `--interactive`: Run in interactive mode. Ask for confirmation before writing each change.
+- `-e EXT`, `--ext EXT`: Additional file extensions to check when recursively walking directories.
+- `--ignore PATTERN`: Additional file names to ignore when recursively walking directories.
+- `--max-update RELEASE`: Try to find updates up to the specified release type.
 
 ## Example
 

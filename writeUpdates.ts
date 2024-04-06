@@ -11,7 +11,8 @@ export async function writeUpdates(updates: UpdateEntry[], options: {
   const sortedUpdates = Map.groupBy(
     sortBy(
       updates,
-      (update) => `${update.filePath}:${update.start.line}`,
+      (update) =>
+        `${update.filePath}:${update.startIndex.toFixed(0).padStart(9, "0")}`,
     ),
     (update) => update.filePath,
   );
