@@ -3174,7 +3174,7 @@ snapshot[`writes updates with additional extensions specified 1`] = `
 }
 `;
 
-snapshot[`writes updates with ignore patterns specified 1`] = `
+snapshot[`writes updates with skip patterns specified 1`] = `
 {
   content: {
     "help.md": [
@@ -3520,7 +3520,7 @@ snapshot[`writes updates with ignore patterns specified 1`] = `
 }
 `;
 
-snapshot[`writes updates with ignore patterns specified 2`] = `
+snapshot[`writes updates with skip patterns specified 2`] = `
 {
   content: {
     "help.md": [

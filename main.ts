@@ -5,13 +5,20 @@ import { setup } from "https://deno.land/std@0.221.0/log/setup.ts";
 import { globToRegExp } from "https://deno.land/std@0.221.0/path/glob_to_regexp.ts";
 import { z } from "https://esm.sh/zod@3.22.4";
 import { RELEASE_TYPES } from "./checkCdnUpdate.ts";
-import {
-  defaultExtensions,
-  defaultIgnorePatterns,
-  ListDirUpdatesOptions,
-  listUpdates,
-} from "./listUpdates.ts";
+import { ListDirUpdatesOptions, listUpdates } from "./listUpdates.ts";
 import { writeUpdates } from "./writeUpdates.ts";
+
+const defaultExtensions = [
+  "html",
+  "css",
+  "js",
+  "jsx",
+  "ts",
+  "tsx",
+  "json",
+  "yml",
+];
+const defaultSkipPaths = ["**/node_modules", "**/.git"];
 
 // deno-fmt-ignore
 const helpText = `
@@ -45,11 +52,11 @@ ${bold(`OPTIONS`)}
     By default, ${new Intl.ListFormat("en").format(defaultExtensions)} files are checked.
     See: https://deno.land/std@0.221.0/fs/walk.ts?s=WalkOptions#prop_exts
 
-  ${bold(`--ignore`)} ${underline(`PATTERN`)}
-    Additional paths to ignore when recursively walking directories.
+  ${bold(`-s`)} ${underline(`PATH`)}, ${bold(`--skip`)} ${underline(`PATH`)}
+    Additional paths to skip when recursively walking directories.
     Can be specified multiple times.
     Supports glob syntax.
-    By default, ${new Intl.ListFormat("en").format(defaultIgnorePatterns.map((pattern) => pattern.source.slice(1, -1)))} paths are ignored.
+    By default, ${new Intl.ListFormat("en").format(defaultSkipPaths)} paths are ignored.
     See:
     https://deno.land/std@0.221.0/path/glob_to_regexp.ts?s=globToRegExp
     https://deno.land/std@0.221.0/fs/walk.ts?s=WalkOptions#prop_skip
@@ -57,7 +64,7 @@ ${bold(`OPTIONS`)}
   ${bold(`--max-update`)} ${underline(`RELEASE`)}
     Try to find updates up to the specified release type.
     This doesn't work for all CDNs.
-    Possible values are: ${new Intl.ListFormat("en").format(RELEASE_TYPES)}.
+    Possible values are ${new Intl.ListFormat("en", { type: "disjunction" }).format(RELEASE_TYPES)}.
     Default: major (just request the same URL but without version).
 `;
 
@@ -71,15 +78,15 @@ export async function runCdnUp(
 ) {
   const options = parseArgs(args, {
     boolean: ["help", "interactive", "verbose", "write"],
-    string: ["extensions", "ignorePatterns", "maxUpdate"],
-    collect: ["extensions", "ignorePatterns"],
+    string: ["extensions", "skipPaths", "maxUpdate"],
+    collect: ["extensions", "skipPaths"],
     alias: {
       help: ["h"],
       interactive: ["i"],
       verbose: ["v"],
       write: ["w"],
       extensions: ["ext", "e"],
-      ignorePatterns: ["ignore"],
+      skipPaths: ["skip", "s"],
       maxUpdate: ["max-update", "u"],
     },
   });
@@ -88,8 +95,10 @@ export async function runCdnUp(
   if (paths.length === 0) paths.push(".");
 
   const extensions = options.extensions
-    .flatMap((ext) => ext.split(","));
-  const ignorePatterns = options.ignorePatterns
+    .flatMap((ext) => ext.split(","))
+    .concat(defaultExtensions);
+  const skipPaths = options.skipPaths
+    .concat(defaultSkipPaths)
     .map((pattern) => globToRegExp(pattern));
   const maxUpdate = z.enum(RELEASE_TYPES).optional()
     .parse(options.maxUpdate);
@@ -115,8 +124,8 @@ export async function runCdnUp(
           },
           memoize: true,
           maxUpdate,
-          extensions,
-          ignorePatterns,
+          exts: extensions,
+          skip: skipPaths,
           ...overrideOptions,
         },
       )),

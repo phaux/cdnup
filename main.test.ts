@@ -199,24 +199,24 @@ Deno.test("writes updates with additional extensions specified", async (t) => {
   await assertSnapshot(t, output);
 });
 
-Deno.test("writes updates with ignore patterns specified", async (t) => {
+Deno.test("writes updates with skip patterns specified", async (t) => {
   {
     const output = await testFixture([
       "-w",
-      "--ignore",
+      "--skip",
       "**/*.js",
-      "--ignore",
+      "--skip",
       "**/*.ts",
     ], redirects);
     await assertSnapshot(t, output);
   }
   {
     const output = await testFixture(
-      ["-w", "--ignore", "static"],
+      ["-w", "-s", "**/static"],
       redirects,
     );
     assertEquals(
-      await testFixture(["-w", "--ignore", "static/**"], redirects),
+      await testFixture(["-w", "-s", "**/static/**"], redirects),
       output,
     );
     await assertSnapshot(t, output);

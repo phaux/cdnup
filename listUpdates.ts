@@ -1,4 +1,4 @@
-import { walk } from "https://deno.land/std@0.221.0/fs/walk.ts";
+import { walk, WalkOptions } from "https://deno.land/std@0.221.0/fs/walk.ts";
 import { info } from "https://deno.land/std@0.221.0/log/info.ts";
 import { AsyncIterableX } from "https://esm.sh/ix@5.0.0/asynciterable/asynciterablex";
 import { flatMap } from "https://esm.sh/ix@5.0.0/asynciterable/operators/flatmap";
@@ -15,17 +15,6 @@ import {
 
 const urlRegexp =
   /\bhttps?:\/\/[\w\d.-]+\/[\w\d!#%&*?@^<=>/[\]:.~+-]*[\w\d!#&*?@^=/[\]:~+-]/dgi;
-export const defaultExtensions = [
-  "html",
-  "css",
-  "js",
-  "jsx",
-  "ts",
-  "tsx",
-  "json",
-  "yml",
-];
-export const defaultIgnorePatterns = [/^node_modules$/, /^\.git$/];
 
 export interface ListFileUpdatesOptions extends CheckUpdateOptions {
   onError?:
@@ -34,10 +23,8 @@ export interface ListFileUpdatesOptions extends CheckUpdateOptions {
   memoize?: boolean | undefined;
 }
 
-export interface ListDirUpdatesOptions extends ListFileUpdatesOptions {
-  extensions?: string[] | undefined;
-  ignorePatterns?: RegExp[] | undefined;
-}
+export interface ListDirUpdatesOptions
+  extends ListFileUpdatesOptions, WalkOptions {}
 
 export interface Update {
   filePath: string;
@@ -80,8 +67,7 @@ export async function* listDirUpdates(
 ): AsyncGenerator<Update, void, undefined> {
   const walker = walk(dirPath, {
     includeDirs: false,
-    exts: [...defaultExtensions, ...options?.extensions ?? []],
-    skip: [...defaultIgnorePatterns, ...options?.ignorePatterns ?? []],
+    ...options,
   });
   yield* AsyncIterableX.from(walker)
     .pipe(flatMap(async function* (entry) {
