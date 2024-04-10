@@ -18,7 +18,7 @@
     }
   },
   "tasks": {
-    "cdnup": "deno run --allow-read --allow-write=. --allow-net main.ts --ignore fixtures --ignore coverage --ignore '*.test.*' -w",
+    "cdnup": "deno run --allow-read --allow-write=. --allow-net main.ts --skip '**/fixtures' --skip '**/coverage' --block '*.example.com' -w",
     "snapshot": "deno test --allow-read --allow-write=/tmp,__snapshots__ -- -u",
     "test": "rm -rf coverage && deno test --allow-read --allow-write=/tmp --coverage && deno coverage --lcov --output=coverage/lcov.info && deno lint && deno fmt --check"
   }

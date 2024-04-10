@@ -21,8 +21,9 @@ When not specified, the current directory is checked recursively.
 
 - `-w`, `--write`: Write the latest found versions to the files.
 - `-i`, `--interactive`: Run in interactive mode. Ask for confirmation before writing each change.
-- `-e EXT`, `--ext EXT`: Additional file extensions to check when recursively walking directories.
-- `-s PATH`, `--skip PATH`: Additional paths to skip when recursively walking directories.
+- `-e EXT`, `--ext EXT`: File extensions to check when recursively walking directories.
+- `-s PATH`, `--skip PATH`: Paths to skip when recursively walking directories.
+- `-b DOMAIN`, `--block DOMAIN`: Domains to never check for updates.
 - `--max-update RELEASE`: Try to find updates up to the specified release type.
 
 ## Example

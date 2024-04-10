@@ -2,29 +2,29 @@ export const snapshot = {};
 
 snapshot[`updates to latest version 1`] = `
 {
-  ok: true,
-  value: null,
+  error: "Invalid URL: 'not even a URL'",
+  ok: false,
 }
 `;
 
 snapshot[`updates to latest version 2`] = `
 {
-  ok: true,
-  value: null,
+  error: "No version in https://libs.example.com/foo",
+  ok: false,
 }
 `;
 
 snapshot[`updates to latest version 3`] = `
 {
-  ok: true,
-  value: null,
+  error: "No version in https://libs.example.com/foo@",
+  ok: false,
 }
 `;
 
 snapshot[`updates to latest version 4`] = `
 {
-  ok: true,
-  value: null,
+  error: "No version in https://libs.example.com/foo@v",
+  ok: false,
 }
 `;
 
@@ -741,29 +741,29 @@ snapshot[`updates to latest version 31`] = `
 
 snapshot[`updates with max update minor 1`] = `
 {
-  ok: true,
-  value: null,
+  error: "Invalid URL: 'not even a URL'",
+  ok: false,
 }
 `;
 
 snapshot[`updates with max update minor 2`] = `
 {
-  ok: true,
-  value: null,
+  error: "No version in https://libs.example.com/foo",
+  ok: false,
 }
 `;
 
 snapshot[`updates with max update minor 3`] = `
 {
-  ok: true,
-  value: null,
+  error: "No version in https://libs.example.com/foo@",
+  ok: false,
 }
 `;
 
 snapshot[`updates with max update minor 4`] = `
 {
-  ok: true,
-  value: null,
+  error: "No version in https://libs.example.com/foo@v",
+  ok: false,
 }
 `;
 
@@ -1219,29 +1219,29 @@ snapshot[`updates with max update minor 31`] = `
 
 snapshot[`updates with max update patch 1`] = `
 {
-  ok: true,
-  value: null,
+  error: "Invalid URL: 'not even a URL'",
+  ok: false,
 }
 `;
 
 snapshot[`updates with max update patch 2`] = `
 {
-  ok: true,
-  value: null,
+  error: "No version in https://libs.example.com/foo",
+  ok: false,
 }
 `;
 
 snapshot[`updates with max update patch 3`] = `
 {
-  ok: true,
-  value: null,
+  error: "No version in https://libs.example.com/foo@",
+  ok: false,
 }
 `;
 
 snapshot[`updates with max update patch 4`] = `
 {
-  ok: true,
-  value: null,
+  error: "No version in https://libs.example.com/foo@v",
+  ok: false,
 }
 `;
 

@@ -4,7 +4,7 @@ import { match } from "https://esm.sh/ts-pattern@5.0.8";
 
 export const RELEASE_TYPES = ["patch", "minor", "major"] as const;
 
-const versionRegexp =
+export const versionRegexp =
   /@(?<op>\^|~|<=?|==?)?(?<v>v)?(?<v1>\d+|[*x])(?:\.(?<v2>\d+|[*x]))?(?:\.(?<v3>\d+|[*x]))?(?:-(?<pre>[\w\d_.+-]+))?(?=\W|$)/di;
 
 export interface CdnUpdate {
@@ -32,18 +32,21 @@ export const checkCdnUpdateMemoized = memoize(
 /**
  * Check if a CDN URL can be updated to a newer version.
  *
- * @returns Update info or null if either the URL doesn't contain a version or the latest version is the same as current version.
+ * @returns Update info or null if the latest version is the same as current version.
  * @throws when fetching the update fails or the response is not correct.
  */
 export async function checkCdnUpdate(
-  currentUrl: string,
+  url: string,
   options?: CheckUpdateOptions,
 ): Promise<CdnUpdate | null> {
+  const currentUrl = new URL(url).href;
   const maxUpdate = options?.maxUpdate ?? "major";
 
   // parse current version from url
   const currentVersion = parseCdnVersion(currentUrl);
-  if (currentVersion == null) return null;
+  if (currentVersion == null) {
+    throw new Error(`No version in ${currentUrl}`);
+  }
 
   // check if current version doesn't already allow any possible update
   if (currentVersion.major == null) {

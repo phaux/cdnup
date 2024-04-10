@@ -74,9 +74,9 @@ const redirects = {
   "https://libs.example.com/bootstrap@5.0.0/bootstrap.min.css": () =>
     Response.json({}),
 
-  "https://deno.land/x/example/mod.ts": () =>
-    Response.redirect("https://deno.land/x/example@v2.0.0/mod.ts"),
-  "https://deno.land/x/example@v2.0.0/mod.ts": () => Response.json({}),
+  "https://mods.example.com/x/example/mod.ts": () =>
+    Response.redirect("https://mods.example.com/x/example@v2.0.0/mod.ts"),
+  "https://mods.example.com/x/example@v2.0.0/mod.ts": () => Response.json({}),
 };
 
 const sourceContent = await getDirContent(fixturesDir);
@@ -199,7 +199,7 @@ Deno.test("writes updates with additional extensions specified", async (t) => {
   await assertSnapshot(t, output);
 });
 
-Deno.test("writes updates with skip patterns specified", async (t) => {
+Deno.test("writes updates with skip paths specified", async (t) => {
   {
     const output = await testFixture([
       "-w",
@@ -221,4 +221,17 @@ Deno.test("writes updates with skip patterns specified", async (t) => {
     );
     await assertSnapshot(t, output);
   }
+});
+
+Deno.test("writes updates with blocked domains specified", async (t) => {
+  const output = await testFixture([
+    "-w",
+    "--block",
+    "mods.example.com",
+  ], redirects);
+  assertEquals(
+    await testFixture(["-w", "-b", "mods.example.com"], redirects),
+    output,
+  );
+  await assertSnapshot(t, output);
 });

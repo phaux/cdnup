@@ -12,15 +12,17 @@ import {
   checkCdnUpdateMemoized,
   CheckUpdateOptions,
 } from "./checkCdnUpdate.ts";
+import { versionRegexp } from "./checkCdnUpdate.ts";
 
 const urlRegexp =
   /\bhttps?:\/\/[\w\d.-]+\/[\w\d!#%&*?@^<=>/[\]:.~+-]*[\w\d!#&*?@^=/[\]:~+-]/dgi;
 
 export interface ListFileUpdatesOptions extends CheckUpdateOptions {
+  blockDomains?: RegExp[] | undefined;
+  memoize?: boolean | undefined;
   onError?:
     | ((filePath: string, url: string | undefined, error: Error) => void)
     | undefined;
-  memoize?: boolean | undefined;
 }
 
 export interface ListDirUpdatesOptions
@@ -96,6 +98,18 @@ export async function* listFileUpdates(
   yield* AsyncIterableX.from(urlMatches)
     .pipe(flatMap(async function* (urlMatch) {
       const [url] = urlMatch;
+
+      if (!url.match(versionRegexp)) return;
+
+      try {
+        const domain = new URL(url).hostname;
+        if (options?.blockDomains?.some((re) => re.test(domain))) {
+          return;
+        }
+      } catch {
+        return;
+      }
+
       info(`Checking URL ${url}`);
       let update;
       try {
@@ -112,6 +126,7 @@ export async function* listFileUpdates(
           );
         }
       }
+
       if (update) {
         const [start, end] = urlMatch.indices![0]!;
         const location = lines.locationForIndex(start)!;

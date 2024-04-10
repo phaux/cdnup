@@ -61,6 +61,11 @@ ${bold(`OPTIONS`)}
     https://deno.land/std@0.221.0/path/glob_to_regexp.ts?s=globToRegExp
     https://deno.land/std@0.221.0/fs/walk.ts?s=WalkOptions#prop_skip
 
+  ${bold(`-b`)} ${underline(`DOMAIN`)}, ${bold(`--block`)} ${underline(`DOMAIN`)}
+    Domains to never check for updates.
+    Can be specified multiple times.
+    Supports glob syntax.
+
   ${bold(`--max-update`)} ${underline(`RELEASE`)}
     Try to find updates up to the specified release type.
     This doesn't work for all CDNs.
@@ -78,8 +83,8 @@ export async function runCdnUp(
 ) {
   const options = parseArgs(args, {
     boolean: ["help", "interactive", "verbose", "write"],
-    string: ["extensions", "skipPaths", "maxUpdate"],
-    collect: ["extensions", "skipPaths"],
+    string: ["extensions", "skipPaths", "blockDomains", "maxUpdate"],
+    collect: ["extensions", "skipPaths", "blockDomains"],
     alias: {
       help: ["h"],
       interactive: ["i"],
@@ -87,6 +92,7 @@ export async function runCdnUp(
       write: ["w"],
       extensions: ["ext", "e"],
       skipPaths: ["skip", "s"],
+      blockDomains: ["block", "b"],
       maxUpdate: ["max-update", "u"],
     },
   });
@@ -99,7 +105,9 @@ export async function runCdnUp(
     .concat(defaultExtensions);
   const skipPaths = options.skipPaths
     .concat(defaultSkipPaths)
-    .map((pattern) => globToRegExp(pattern));
+    .map((path) => globToRegExp(path));
+  const blockDomains = options.blockDomains
+    .map((domain) => globToRegExp(domain));
   const maxUpdate = z.enum(RELEASE_TYPES).optional()
     .parse(options.maxUpdate);
 
@@ -126,6 +134,7 @@ export async function runCdnUp(
           maxUpdate,
           exts: extensions,
           skip: skipPaths,
+          blockDomains,
           ...overrideOptions,
         },
       )),

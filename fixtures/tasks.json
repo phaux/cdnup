@@ -1,1 +1,1 @@
-{ "start": "deno run https://deno.land/x/example@v1/mod.ts" }
+{ "start": "deno run https://mods.example.com/x/example@v1/mod.ts" }

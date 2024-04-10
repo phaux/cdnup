@@ -342,7 +342,7 @@ snapshot[`finds updates 1`] = `
       {
         filePath: "tasks.json",
         index: {
-          end: 58,
+          end: 65,
           start: 21,
         },
         location: {
@@ -350,12 +350,12 @@ snapshot[`finds updates 1`] = `
           line: 0,
         },
         update: {
-          baseUrl: "https://deno.land/x/example/mod.ts",
-          currentUrl: "https://deno.land/x/example@v1/mod.ts",
+          baseUrl: "https://mods.example.com/x/example/mod.ts",
+          currentUrl: "https://mods.example.com/x/example@v1/mod.ts",
           currentVersion: {
             index: {
-              end: 30,
-              start: 27,
+              end: 37,
+              start: 34,
             },
             major: 1,
             match: "@v1",
@@ -364,11 +364,11 @@ snapshot[`finds updates 1`] = `
             prefix: "v",
             prerelease: null,
           },
-          latestUrl: "https://deno.land/x/example@v2.0.0/mod.ts",
+          latestUrl: "https://mods.example.com/x/example@v2.0.0/mod.ts",
           latestVersion: {
             index: {
-              end: 34,
-              start: 27,
+              end: 41,
+              start: 34,
             },
             major: 2,
             match: "@v2.0.0",
@@ -383,7 +383,7 @@ snapshot[`finds updates 1`] = `
       {
         filePath: "tasks.yml",
         index: {
-          end: 53,
+          end: 60,
           start: 16,
         },
         location: {
@@ -391,12 +391,12 @@ snapshot[`finds updates 1`] = `
           line: 0,
         },
         update: {
-          baseUrl: "https://deno.land/x/example/mod.ts",
-          currentUrl: "https://deno.land/x/example@v2/mod.ts",
+          baseUrl: "https://mods.example.com/x/example/mod.ts",
+          currentUrl: "https://mods.example.com/x/example@v2/mod.ts",
           currentVersion: {
             index: {
-              end: 30,
-              start: 27,
+              end: 37,
+              start: 34,
             },
             major: 2,
             match: "@v2",
@@ -405,11 +405,11 @@ snapshot[`finds updates 1`] = `
             prefix: "v",
             prerelease: null,
           },
-          latestUrl: "https://deno.land/x/example@v2.0.0/mod.ts",
+          latestUrl: "https://mods.example.com/x/example@v2.0.0/mod.ts",
           latestVersion: {
             index: {
-              end: 34,
-              start: 27,
+              end: 41,
+              start: 34,
             },
             major: 2,
             match: "@v2.0.0",
@@ -436,13 +436,13 @@ snapshot[`writes updates 1`] = `
       "Check out https://libs.example.com/lib@1.0.0/mod.js.",
     ],
     "tasks.ini": [
-      'start="deno run https://deno.land/x/example@v1.2.3/mod.ts"',
+      'start="deno run https://mods.example.com/x/example@v1.2.3/mod.ts"',
     ],
     "tasks.json": [
-      '{ "start": "deno run https://deno.land/x/example@v2.0.0/mod.ts" }',
+      '{ "start": "deno run https://mods.example.com/x/example@v2.0.0/mod.ts" }',
     ],
     "tasks.yml": [
-      "start: deno run https://deno.land/x/example@v2.0.0/mod.ts",
+      "start: deno run https://mods.example.com/x/example@v2.0.0/mod.ts",
     ],
     node_modules: {
       "foo.js": [
@@ -817,7 +817,7 @@ snapshot[`writes updates 1`] = `
       {
         filePath: "tasks.json",
         index: {
-          end: 58,
+          end: 65,
           start: 21,
         },
         location: {
@@ -825,12 +825,12 @@ snapshot[`writes updates 1`] = `
           line: 0,
         },
         update: {
-          baseUrl: "https://deno.land/x/example/mod.ts",
-          currentUrl: "https://deno.land/x/example@v1/mod.ts",
+          baseUrl: "https://mods.example.com/x/example/mod.ts",
+          currentUrl: "https://mods.example.com/x/example@v1/mod.ts",
           currentVersion: {
             index: {
-              end: 30,
-              start: 27,
+              end: 37,
+              start: 34,
             },
             major: 1,
             match: "@v1",
@@ -839,11 +839,11 @@ snapshot[`writes updates 1`] = `
             prefix: "v",
             prerelease: null,
           },
-          latestUrl: "https://deno.land/x/example@v2.0.0/mod.ts",
+          latestUrl: "https://mods.example.com/x/example@v2.0.0/mod.ts",
           latestVersion: {
             index: {
-              end: 34,
-              start: 27,
+              end: 41,
+              start: 34,
             },
             major: 2,
             match: "@v2.0.0",
@@ -858,7 +858,7 @@ snapshot[`writes updates 1`] = `
       {
         filePath: "tasks.yml",
         index: {
-          end: 53,
+          end: 60,
           start: 16,
         },
         location: {
@@ -866,12 +866,12 @@ snapshot[`writes updates 1`] = `
           line: 0,
         },
         update: {
-          baseUrl: "https://deno.land/x/example/mod.ts",
-          currentUrl: "https://deno.land/x/example@v2/mod.ts",
+          baseUrl: "https://mods.example.com/x/example/mod.ts",
+          currentUrl: "https://mods.example.com/x/example@v2/mod.ts",
           currentVersion: {
             index: {
-              end: 30,
-              start: 27,
+              end: 37,
+              start: 34,
             },
             major: 2,
             match: "@v2",
@@ -880,11 +880,11 @@ snapshot[`writes updates 1`] = `
             prefix: "v",
             prerelease: null,
           },
-          latestUrl: "https://deno.land/x/example@v2.0.0/mod.ts",
+          latestUrl: "https://mods.example.com/x/example@v2.0.0/mod.ts",
           latestVersion: {
             index: {
-              end: 34,
-              start: 27,
+              end: 41,
+              start: 34,
             },
             major: 2,
             match: "@v2.0.0",
@@ -1132,13 +1132,13 @@ snapshot[`writes updates in single dir 1`] = `
       "Check out https://libs.example.com/lib@1.0.0/mod.js.",
     ],
     "tasks.ini": [
-      'start="deno run https://deno.land/x/example@v1.2.3/mod.ts"',
+      'start="deno run https://mods.example.com/x/example@v1.2.3/mod.ts"',
     ],
     "tasks.json": [
-      '{ "start": "deno run https://deno.land/x/example@v1/mod.ts" }',
+      '{ "start": "deno run https://mods.example.com/x/example@v1/mod.ts" }',
     ],
     "tasks.yml": [
-      "start: deno run https://deno.land/x/example@v2/mod.ts",
+      "start: deno run https://mods.example.com/x/example@v2/mod.ts",
     ],
     node_modules: {
       "foo.js": [
@@ -1457,13 +1457,13 @@ snapshot[`writes updates in single file 1`] = `
       "Check out https://libs.example.com/lib@1.0.0/mod.js.",
     ],
     "tasks.ini": [
-      'start="deno run https://deno.land/x/example@v1.2.3/mod.ts"',
+      'start="deno run https://mods.example.com/x/example@v1.2.3/mod.ts"',
     ],
     "tasks.json": [
-      '{ "start": "deno run https://deno.land/x/example@v1/mod.ts" }',
+      '{ "start": "deno run https://mods.example.com/x/example@v1/mod.ts" }',
     ],
     "tasks.yml": [
-      "start: deno run https://deno.land/x/example@v2/mod.ts",
+      "start: deno run https://mods.example.com/x/example@v2/mod.ts",
     ],
     node_modules: {
       "foo.js": [
@@ -1907,13 +1907,13 @@ snapshot[`writes updates in multiple dirs 1`] = `
       "Check out https://libs.example.com/lib@1.0.0/mod.js.",
     ],
     "tasks.ini": [
-      'start="deno run https://deno.land/x/example@v1.2.3/mod.ts"',
+      'start="deno run https://mods.example.com/x/example@v1.2.3/mod.ts"',
     ],
     "tasks.json": [
-      '{ "start": "deno run https://deno.land/x/example@v1/mod.ts" }',
+      '{ "start": "deno run https://mods.example.com/x/example@v1/mod.ts" }',
     ],
     "tasks.yml": [
-      "start: deno run https://deno.land/x/example@v2/mod.ts",
+      "start: deno run https://mods.example.com/x/example@v2/mod.ts",
     ],
     node_modules: {
       "foo.js": [
@@ -2439,13 +2439,13 @@ snapshot[`writes updates in multiple files 1`] = `
       "Check out https://libs.example.com/lib@1.0.0/mod.js.",
     ],
     "tasks.ini": [
-      'start="deno run https://deno.land/x/example@v1.2.3/mod.ts"',
+      'start="deno run https://mods.example.com/x/example@v1.2.3/mod.ts"',
     ],
     "tasks.json": [
-      '{ "start": "deno run https://deno.land/x/example@v1/mod.ts" }',
+      '{ "start": "deno run https://mods.example.com/x/example@v1/mod.ts" }',
     ],
     "tasks.yml": [
-      "start: deno run https://deno.land/x/example@v2/mod.ts",
+      "start: deno run https://mods.example.com/x/example@v2/mod.ts",
     ],
     node_modules: {
       "foo.js": [
@@ -2627,13 +2627,13 @@ snapshot[`writes updates with additional extensions specified 1`] = `
       "Check out https://libs.example.com/lib@3.2.1/mod.js.",
     ],
     "tasks.ini": [
-      'start="deno run https://deno.land/x/example@v1.2.3/mod.ts"',
+      'start="deno run https://mods.example.com/x/example@v1.2.3/mod.ts"',
     ],
     "tasks.json": [
-      '{ "start": "deno run https://deno.land/x/example@v2.0.0/mod.ts" }',
+      '{ "start": "deno run https://mods.example.com/x/example@v2.0.0/mod.ts" }',
     ],
     "tasks.yml": [
-      "start: deno run https://deno.land/x/example@v2.0.0/mod.ts",
+      "start: deno run https://mods.example.com/x/example@v2.0.0/mod.ts",
     ],
     node_modules: {
       "foo.js": [
@@ -3090,7 +3090,7 @@ snapshot[`writes updates with additional extensions specified 1`] = `
       {
         filePath: "tasks.json",
         index: {
-          end: 58,
+          end: 65,
           start: 21,
         },
         location: {
@@ -3098,12 +3098,12 @@ snapshot[`writes updates with additional extensions specified 1`] = `
           line: 0,
         },
         update: {
-          baseUrl: "https://deno.land/x/example/mod.ts",
-          currentUrl: "https://deno.land/x/example@v1/mod.ts",
+          baseUrl: "https://mods.example.com/x/example/mod.ts",
+          currentUrl: "https://mods.example.com/x/example@v1/mod.ts",
           currentVersion: {
             index: {
-              end: 30,
-              start: 27,
+              end: 37,
+              start: 34,
             },
             major: 1,
             match: "@v1",
@@ -3112,11 +3112,11 @@ snapshot[`writes updates with additional extensions specified 1`] = `
             prefix: "v",
             prerelease: null,
           },
-          latestUrl: "https://deno.land/x/example@v2.0.0/mod.ts",
+          latestUrl: "https://mods.example.com/x/example@v2.0.0/mod.ts",
           latestVersion: {
             index: {
-              end: 34,
-              start: 27,
+              end: 41,
+              start: 34,
             },
             major: 2,
             match: "@v2.0.0",
@@ -3131,7 +3131,7 @@ snapshot[`writes updates with additional extensions specified 1`] = `
       {
         filePath: "tasks.yml",
         index: {
-          end: 53,
+          end: 60,
           start: 16,
         },
         location: {
@@ -3139,12 +3139,12 @@ snapshot[`writes updates with additional extensions specified 1`] = `
           line: 0,
         },
         update: {
-          baseUrl: "https://deno.land/x/example/mod.ts",
-          currentUrl: "https://deno.land/x/example@v2/mod.ts",
+          baseUrl: "https://mods.example.com/x/example/mod.ts",
+          currentUrl: "https://mods.example.com/x/example@v2/mod.ts",
           currentVersion: {
             index: {
-              end: 30,
-              start: 27,
+              end: 37,
+              start: 34,
             },
             major: 2,
             match: "@v2",
@@ -3153,11 +3153,11 @@ snapshot[`writes updates with additional extensions specified 1`] = `
             prefix: "v",
             prerelease: null,
           },
-          latestUrl: "https://deno.land/x/example@v2.0.0/mod.ts",
+          latestUrl: "https://mods.example.com/x/example@v2.0.0/mod.ts",
           latestVersion: {
             index: {
-              end: 34,
-              start: 27,
+              end: 41,
+              start: 34,
             },
             major: 2,
             match: "@v2.0.0",
@@ -3174,7 +3174,7 @@ snapshot[`writes updates with additional extensions specified 1`] = `
 }
 `;
 
-snapshot[`writes updates with skip patterns specified 1`] = `
+snapshot[`writes updates with skip paths specified 1`] = `
 {
   content: {
     "help.md": [
@@ -3184,13 +3184,13 @@ snapshot[`writes updates with skip patterns specified 1`] = `
       "Check out https://libs.example.com/lib@1.0.0/mod.js.",
     ],
     "tasks.ini": [
-      'start="deno run https://deno.land/x/example@v1.2.3/mod.ts"',
+      'start="deno run https://mods.example.com/x/example@v1.2.3/mod.ts"',
     ],
     "tasks.json": [
-      '{ "start": "deno run https://deno.land/x/example@v2.0.0/mod.ts" }',
+      '{ "start": "deno run https://mods.example.com/x/example@v2.0.0/mod.ts" }',
     ],
     "tasks.yml": [
-      "start: deno run https://deno.land/x/example@v2.0.0/mod.ts",
+      "start: deno run https://mods.example.com/x/example@v2.0.0/mod.ts",
     ],
     node_modules: {
       "foo.js": [
@@ -3436,7 +3436,7 @@ snapshot[`writes updates with skip patterns specified 1`] = `
       {
         filePath: "tasks.json",
         index: {
-          end: 58,
+          end: 65,
           start: 21,
         },
         location: {
@@ -3444,12 +3444,12 @@ snapshot[`writes updates with skip patterns specified 1`] = `
           line: 0,
         },
         update: {
-          baseUrl: "https://deno.land/x/example/mod.ts",
-          currentUrl: "https://deno.land/x/example@v1/mod.ts",
+          baseUrl: "https://mods.example.com/x/example/mod.ts",
+          currentUrl: "https://mods.example.com/x/example@v1/mod.ts",
           currentVersion: {
             index: {
-              end: 30,
-              start: 27,
+              end: 37,
+              start: 34,
             },
             major: 1,
             match: "@v1",
@@ -3458,11 +3458,11 @@ snapshot[`writes updates with skip patterns specified 1`] = `
             prefix: "v",
             prerelease: null,
           },
-          latestUrl: "https://deno.land/x/example@v2.0.0/mod.ts",
+          latestUrl: "https://mods.example.com/x/example@v2.0.0/mod.ts",
           latestVersion: {
             index: {
-              end: 34,
-              start: 27,
+              end: 41,
+              start: 34,
             },
             major: 2,
             match: "@v2.0.0",
@@ -3477,7 +3477,7 @@ snapshot[`writes updates with skip patterns specified 1`] = `
       {
         filePath: "tasks.yml",
         index: {
-          end: 53,
+          end: 60,
           start: 16,
         },
         location: {
@@ -3485,12 +3485,12 @@ snapshot[`writes updates with skip patterns specified 1`] = `
           line: 0,
         },
         update: {
-          baseUrl: "https://deno.land/x/example/mod.ts",
-          currentUrl: "https://deno.land/x/example@v2/mod.ts",
+          baseUrl: "https://mods.example.com/x/example/mod.ts",
+          currentUrl: "https://mods.example.com/x/example@v2/mod.ts",
           currentVersion: {
             index: {
-              end: 30,
-              start: 27,
+              end: 37,
+              start: 34,
             },
             major: 2,
             match: "@v2",
@@ -3499,11 +3499,11 @@ snapshot[`writes updates with skip patterns specified 1`] = `
             prefix: "v",
             prerelease: null,
           },
-          latestUrl: "https://deno.land/x/example@v2.0.0/mod.ts",
+          latestUrl: "https://mods.example.com/x/example@v2.0.0/mod.ts",
           latestVersion: {
             index: {
-              end: 34,
-              start: 27,
+              end: 41,
+              start: 34,
             },
             major: 2,
             match: "@v2.0.0",
@@ -3520,7 +3520,7 @@ snapshot[`writes updates with skip patterns specified 1`] = `
 }
 `;
 
-snapshot[`writes updates with skip patterns specified 2`] = `
+snapshot[`writes updates with skip paths specified 2`] = `
 {
   content: {
     "help.md": [
@@ -3530,13 +3530,13 @@ snapshot[`writes updates with skip patterns specified 2`] = `
       "Check out https://libs.example.com/lib@1.0.0/mod.js.",
     ],
     "tasks.ini": [
-      'start="deno run https://deno.land/x/example@v1.2.3/mod.ts"',
+      'start="deno run https://mods.example.com/x/example@v1.2.3/mod.ts"',
     ],
     "tasks.json": [
-      '{ "start": "deno run https://deno.land/x/example@v2.0.0/mod.ts" }',
+      '{ "start": "deno run https://mods.example.com/x/example@v2.0.0/mod.ts" }',
     ],
     "tasks.yml": [
-      "start: deno run https://deno.land/x/example@v2.0.0/mod.ts",
+      "start: deno run https://mods.example.com/x/example@v2.0.0/mod.ts",
     ],
     node_modules: {
       "foo.js": [
@@ -3788,7 +3788,7 @@ snapshot[`writes updates with skip patterns specified 2`] = `
       {
         filePath: "tasks.json",
         index: {
-          end: 58,
+          end: 65,
           start: 21,
         },
         location: {
@@ -3796,12 +3796,12 @@ snapshot[`writes updates with skip patterns specified 2`] = `
           line: 0,
         },
         update: {
-          baseUrl: "https://deno.land/x/example/mod.ts",
-          currentUrl: "https://deno.land/x/example@v1/mod.ts",
+          baseUrl: "https://mods.example.com/x/example/mod.ts",
+          currentUrl: "https://mods.example.com/x/example@v1/mod.ts",
           currentVersion: {
             index: {
-              end: 30,
-              start: 27,
+              end: 37,
+              start: 34,
             },
             major: 1,
             match: "@v1",
@@ -3810,11 +3810,11 @@ snapshot[`writes updates with skip patterns specified 2`] = `
             prefix: "v",
             prerelease: null,
           },
-          latestUrl: "https://deno.land/x/example@v2.0.0/mod.ts",
+          latestUrl: "https://mods.example.com/x/example@v2.0.0/mod.ts",
           latestVersion: {
             index: {
-              end: 34,
-              start: 27,
+              end: 41,
+              start: 34,
             },
             major: 2,
             match: "@v2.0.0",
@@ -3829,7 +3829,7 @@ snapshot[`writes updates with skip patterns specified 2`] = `
       {
         filePath: "tasks.yml",
         index: {
-          end: 53,
+          end: 60,
           start: 16,
         },
         location: {
@@ -3837,12 +3837,12 @@ snapshot[`writes updates with skip patterns specified 2`] = `
           line: 0,
         },
         update: {
-          baseUrl: "https://deno.land/x/example/mod.ts",
-          currentUrl: "https://deno.land/x/example@v2/mod.ts",
+          baseUrl: "https://mods.example.com/x/example/mod.ts",
+          currentUrl: "https://mods.example.com/x/example@v2/mod.ts",
           currentVersion: {
             index: {
-              end: 30,
-              start: 27,
+              end: 37,
+              start: 34,
             },
             major: 2,
             match: "@v2",
@@ -3851,11 +3851,11 @@ snapshot[`writes updates with skip patterns specified 2`] = `
             prefix: "v",
             prerelease: null,
           },
-          latestUrl: "https://deno.land/x/example@v2.0.0/mod.ts",
+          latestUrl: "https://mods.example.com/x/example@v2.0.0/mod.ts",
           latestVersion: {
             index: {
-              end: 34,
-              start: 27,
+              end: 41,
+              start: 34,
             },
             major: 2,
             match: "@v2.0.0",
@@ -3865,6 +3865,399 @@ snapshot[`writes updates with skip patterns specified 2`] = `
             prerelease: null,
           },
           release: "minor",
+        },
+      },
+    },
+  },
+}
+`;
+
+snapshot[`writes updates with blocked domains specified 1`] = `
+{
+  content: {
+    "help.md": [
+      "Check out [lib](https://libs.example.com/lib@1.0.0/mod.js).",
+    ],
+    "help.txt": [
+      "Check out https://libs.example.com/lib@1.0.0/mod.js.",
+    ],
+    "tasks.ini": [
+      'start="deno run https://mods.example.com/x/example@v1.2.3/mod.ts"',
+    ],
+    "tasks.json": [
+      '{ "start": "deno run https://mods.example.com/x/example@v1/mod.ts" }',
+    ],
+    "tasks.yml": [
+      "start: deno run https://mods.example.com/x/example@v2/mod.ts",
+    ],
+    node_modules: {
+      "foo.js": [
+        'import "https://libs.example.com/lib@1.0.0/mod.js";',
+      ],
+    },
+    src: {
+      "App.jsx": [
+        'import * as React from "https://libs.example.com/react@19.1.1";',
+      ],
+      "App.tsx": [
+        'import * as React from "https://libs.example.com/preact@10.10.10";',
+      ],
+      "bar.ts": [
+        'import("https://libs.example.com/lib@3.2.1/mod.js");',
+        'import("https://libs.example.com/lib@3.2.1/mod.js");',
+      ],
+      "foo.js": [
+        'import "https://libs.example.com/lib@3.2.1/mod.js";',
+        'import "https://libs.example.com/unknown@1.0.0/mod.js";',
+      ],
+    },
+    static: {
+      "page.html": [
+        '<script src="https://libs.example.com/jquery@3.6.0/dist/jquery.min.js"></script>',
+        '<link rel="stylesheet" href="https://libs.example.com/bootstrap@5.0.0/bootstrap.min.css">',
+        '<img src="https://cdn.example.com/dist/img/logo.png" alt="Logo">',
+      ],
+      "style.css": [
+        '@import "https://libs.example.com/bootstrap@5.0.0/bootstrap.min.css";',
+        "header { background-image: url('https://cdn.example.com/dist/img/logo.jpg'); }",
+      ],
+    },
+  },
+  errors: Set(1) {
+    {
+      error: "Fetching https://libs.example.com/unknown/mod.js failed: 404 ",
+      filePath: "src/foo.js",
+      url: "https://libs.example.com/unknown@1.0.0/mod.js",
+    },
+  },
+  result: {
+    updates: Set(8) {
+      {
+        filePath: "src/App.jsx",
+        index: {
+          end: 61,
+          start: 24,
+        },
+        location: {
+          column: 24,
+          line: 0,
+        },
+        update: {
+          baseUrl: "https://libs.example.com/react",
+          currentUrl: "https://libs.example.com/react@17.0.2",
+          currentVersion: {
+            index: {
+              end: 37,
+              start: 30,
+            },
+            major: 17,
+            match: "@17.0.2",
+            minor: 0,
+            patch: 2,
+            prefix: "",
+            prerelease: null,
+          },
+          latestUrl: "https://libs.example.com/react@19.1.1",
+          latestVersion: {
+            index: {
+              end: 37,
+              start: 30,
+            },
+            major: 19,
+            match: "@19.1.1",
+            minor: 1,
+            patch: 1,
+            prefix: "",
+            prerelease: null,
+          },
+          release: "major",
+        },
+      },
+      {
+        filePath: "src/App.tsx",
+        index: {
+          end: 62,
+          start: 24,
+        },
+        location: {
+          column: 24,
+          line: 0,
+        },
+        update: {
+          baseUrl: "https://libs.example.com/preact",
+          currentUrl: "https://libs.example.com/preact@10.0.0",
+          currentVersion: {
+            index: {
+              end: 38,
+              start: 31,
+            },
+            major: 10,
+            match: "@10.0.0",
+            minor: 0,
+            patch: 0,
+            prefix: "",
+            prerelease: null,
+          },
+          latestUrl: "https://libs.example.com/preact@10.10.10",
+          latestVersion: {
+            index: {
+              end: 40,
+              start: 31,
+            },
+            major: 10,
+            match: "@10.10.10",
+            minor: 10,
+            patch: 10,
+            prefix: "",
+            prerelease: null,
+          },
+          release: "minor",
+        },
+      },
+      {
+        filePath: "src/bar.ts",
+        index: {
+          end: 102,
+          start: 61,
+        },
+        location: {
+          column: 8,
+          line: 1,
+        },
+        update: {
+          baseUrl: "https://libs.example.com/lib/mod.js",
+          currentUrl: "https://libs.example.com/lib@1.0.0/mod.js",
+          currentVersion: {
+            index: {
+              end: 34,
+              start: 28,
+            },
+            major: 1,
+            match: "@1.0.0",
+            minor: 0,
+            patch: 0,
+            prefix: "",
+            prerelease: null,
+          },
+          latestUrl: "https://libs.example.com/lib@3.2.1/mod.js",
+          latestVersion: {
+            index: {
+              end: 34,
+              start: 28,
+            },
+            major: 3,
+            match: "@3.2.1",
+            minor: 2,
+            patch: 1,
+            prefix: "",
+            prerelease: null,
+          },
+          release: "major",
+        },
+      },
+      {
+        filePath: "src/bar.ts",
+        index: {
+          end: 49,
+          start: 8,
+        },
+        location: {
+          column: 8,
+          line: 0,
+        },
+        update: {
+          baseUrl: "https://libs.example.com/lib/mod.js",
+          currentUrl: "https://libs.example.com/lib@2.0.0/mod.js",
+          currentVersion: {
+            index: {
+              end: 34,
+              start: 28,
+            },
+            major: 2,
+            match: "@2.0.0",
+            minor: 0,
+            patch: 0,
+            prefix: "",
+            prerelease: null,
+          },
+          latestUrl: "https://libs.example.com/lib@3.2.1/mod.js",
+          latestVersion: {
+            index: {
+              end: 34,
+              start: 28,
+            },
+            major: 3,
+            match: "@3.2.1",
+            minor: 2,
+            patch: 1,
+            prefix: "",
+            prerelease: null,
+          },
+          release: "major",
+        },
+      },
+      {
+        filePath: "src/foo.js",
+        index: {
+          end: 49,
+          start: 8,
+        },
+        location: {
+          column: 8,
+          line: 0,
+        },
+        update: {
+          baseUrl: "https://libs.example.com/lib/mod.js",
+          currentUrl: "https://libs.example.com/lib@1.0.0/mod.js",
+          currentVersion: {
+            index: {
+              end: 34,
+              start: 28,
+            },
+            major: 1,
+            match: "@1.0.0",
+            minor: 0,
+            patch: 0,
+            prefix: "",
+            prerelease: null,
+          },
+          latestUrl: "https://libs.example.com/lib@3.2.1/mod.js",
+          latestVersion: {
+            index: {
+              end: 34,
+              start: 28,
+            },
+            major: 3,
+            match: "@3.2.1",
+            minor: 2,
+            patch: 1,
+            prefix: "",
+            prerelease: null,
+          },
+          release: "major",
+        },
+      },
+      {
+        filePath: "static/page.html",
+        index: {
+          end: 169,
+          start: 108,
+        },
+        location: {
+          column: 29,
+          line: 1,
+        },
+        update: {
+          baseUrl: "https://libs.example.com/bootstrap/dist/bootstrap.min.css",
+          currentUrl: "https://libs.example.com/bootstrap@4.5/dist/bootstrap.min.css",
+          currentVersion: {
+            index: {
+              end: 38,
+              start: 34,
+            },
+            major: 4,
+            match: "@4.5",
+            minor: 5,
+            patch: null,
+            prefix: "",
+            prerelease: null,
+          },
+          latestUrl: "https://libs.example.com/bootstrap@5.0.0/bootstrap.min.css",
+          latestVersion: {
+            index: {
+              end: 40,
+              start: 34,
+            },
+            major: 5,
+            match: "@5.0.0",
+            minor: 0,
+            patch: 0,
+            prefix: "",
+            prerelease: null,
+          },
+          release: "major",
+        },
+      },
+      {
+        filePath: "static/page.html",
+        index: {
+          end: 67,
+          start: 13,
+        },
+        location: {
+          column: 13,
+          line: 0,
+        },
+        update: {
+          baseUrl: "https://libs.example.com/jquery/dist/jquery.min.js",
+          currentUrl: "https://libs.example.com/jquery@3.5/dist/jquery.min.js",
+          currentVersion: {
+            index: {
+              end: 35,
+              start: 31,
+            },
+            major: 3,
+            match: "@3.5",
+            minor: 5,
+            patch: null,
+            prefix: "",
+            prerelease: null,
+          },
+          latestUrl: "https://libs.example.com/jquery@3.6.0/dist/jquery.min.js",
+          latestVersion: {
+            index: {
+              end: 37,
+              start: 31,
+            },
+            major: 3,
+            match: "@3.6.0",
+            minor: 6,
+            patch: 0,
+            prefix: "",
+            prerelease: null,
+          },
+          release: "minor",
+        },
+      },
+      {
+        filePath: "static/style.css",
+        index: {
+          end: 68,
+          start: 9,
+        },
+        location: {
+          column: 9,
+          line: 0,
+        },
+        update: {
+          baseUrl: "https://libs.example.com/bootstrap/dist/bootstrap.min.css",
+          currentUrl: "https://libs.example.com/bootstrap@4/dist/bootstrap.min.css",
+          currentVersion: {
+            index: {
+              end: 36,
+              start: 34,
+            },
+            major: 4,
+            match: "@4",
+            minor: null,
+            patch: null,
+            prefix: "",
+            prerelease: null,
+          },
+          latestUrl: "https://libs.example.com/bootstrap@5.0.0/bootstrap.min.css",
+          latestVersion: {
+            index: {
+              end: 40,
+              start: 34,
+            },
+            major: 5,
+            match: "@5.0.0",
+            minor: 0,
+            patch: 0,
+            prefix: "",
+            prerelease: null,
+          },
+          release: "major",
         },
       },
     },
