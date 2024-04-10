@@ -1,16 +1,20 @@
 import { walk } from "https://deno.land/std@0.221.0/fs/walk.ts";
-import { error } from "https://deno.land/std@0.221.0/log/error.ts";
 import { info } from "https://deno.land/std@0.221.0/log/info.ts";
 import { AsyncIterableX } from "https://esm.sh/ix@5.0.0/asynciterable/asynciterablex";
 import { flatMap } from "https://esm.sh/ix@5.0.0/asynciterable/operators/flatmap";
-import { tap } from "https://esm.sh/ix@5.0.0/asynciterable/operators/tap";
 import {
   LinesAndColumns,
   SourceLocation,
 } from "https://esm.sh/lines-and-columns@2.0.4";
-import { CdnUpdate, checkCdnUpdate, RELEASE_TYPES } from "./checkCdnUpdate.ts";
+import {
+  CdnUpdate,
+  checkCdnUpdate,
+  checkCdnUpdateMemoized,
+  CheckUpdateOptions,
+} from "./checkCdnUpdate.ts";
 
-const urlRegexp = /\bhttps?:\/\/[\w\d.-]+\/[\w\d!#%&*?@^<=>/[\]:.~+-]+/dgi;
+const urlRegexp =
+  /\bhttps?:\/\/[\w\d.-]+\/[\w\d!#%&*?@^<=>/[\]:.~+-]*[\w\d!#&*?@^=/[\]:~+-]/dgi;
 export const defaultExtensions = [
   "html",
   "css",
@@ -19,58 +23,86 @@ export const defaultExtensions = [
   "ts",
   "tsx",
   "json",
+  "yml",
 ];
 export const defaultIgnorePatterns = [/^node_modules$/, /^\.git$/];
 
-export interface UpdateEntry {
-  update: CdnUpdate;
-  filePath: string;
-  startIndex: number;
-  endIndex: number;
-  start: SourceLocation;
+export interface ListFileUpdatesOptions extends CheckUpdateOptions {
+  onError?:
+    | ((filePath: string, url: string | undefined, error: Error) => void)
+    | undefined;
+  memoize?: boolean | undefined;
 }
 
-export interface ListUpdatesOptions {
-  maxUpdate?: (typeof RELEASE_TYPES)[number] | undefined;
+export interface ListDirUpdatesOptions extends ListFileUpdatesOptions {
   extensions?: string[] | undefined;
   ignorePatterns?: RegExp[] | undefined;
 }
 
+export interface Update {
+  filePath: string;
+  index: { start: number; end: number };
+  location: SourceLocation;
+  update: CdnUpdate;
+}
+
 export async function* listUpdates(
   paths: string[],
-  options?: ListUpdatesOptions,
-) {
+  options?: ListDirUpdatesOptions,
+): AsyncGenerator<Update, void, undefined> {
   yield* AsyncIterableX.from(paths)
     .pipe(flatMap(async function* (path) {
-      const stat = await Deno.stat(path);
-      if (stat.isDirectory) {
-        yield* listDirUpdates(path, options);
-      } else if (stat.isFile) {
-        yield* listFileUpdates(path, options?.maxUpdate);
-      } else {
-        error(`Skipping ${path}`);
+      try {
+        const stat = await Deno.stat(path);
+        if (stat.isDirectory) {
+          info(`Listing updates in directory ${path}`);
+          yield* listDirUpdates(path, options);
+        } else if (stat.isFile) {
+          info(`Listing updates in file ${path}`);
+          yield* listFileUpdates(path, options);
+        } else {
+          throw new Error(`Entry path ${path} is not a file or directory`);
+        }
+      } catch (err) {
+        if (options?.onError) options.onError(path, undefined, err);
+        else {
+          throw new Error(
+            `Listing updates in ${path} failed: ${err.message}`,
+          );
+        }
       }
     }));
 }
 
 export async function* listDirUpdates(
-  rootPath: string,
-  options?: ListUpdatesOptions,
-): AsyncGenerator<UpdateEntry, void, undefined> {
-  const walker = walk(rootPath, {
+  dirPath: string,
+  options?: ListDirUpdatesOptions,
+): AsyncGenerator<Update, void, undefined> {
+  const walker = walk(dirPath, {
     includeDirs: false,
     exts: [...defaultExtensions, ...options?.extensions ?? []],
     skip: [...defaultIgnorePatterns, ...options?.ignorePatterns ?? []],
   });
   yield* AsyncIterableX.from(walker)
-    .pipe(tap((entry) => info(`Checking file ${entry.path}`)))
-    .pipe(flatMap((entry) => listFileUpdates(entry.path, options?.maxUpdate)));
+    .pipe(flatMap(async function* (entry) {
+      info(`Listing updates in file ${entry.path}`);
+      try {
+        yield* listFileUpdates(entry.path, options);
+      } catch (err) {
+        if (options?.onError) options.onError(entry.path, undefined, err);
+        else {
+          throw new Error(
+            `Listing updates in file ${entry.path} failed: ${err.message}`,
+          );
+        }
+      }
+    }));
 }
 
 export async function* listFileUpdates(
   filePath: string,
-  maxUpdate: (typeof RELEASE_TYPES)[number] = "major",
-): AsyncGenerator<UpdateEntry, void, undefined> {
+  options?: ListFileUpdatesOptions,
+): AsyncGenerator<Update, void, undefined> {
   const fileText = await Deno.readTextFile(filePath);
   const lines = new LinesAndColumns(fileText);
   const urlMatches = fileText.matchAll(urlRegexp);
@@ -78,12 +110,26 @@ export async function* listFileUpdates(
   yield* AsyncIterableX.from(urlMatches)
     .pipe(flatMap(async function* (urlMatch) {
       const [url] = urlMatch;
-      info(`Checking url ${url}`);
-      const update = await checkCdnUpdate(url, maxUpdate);
+      info(`Checking URL ${url}`);
+      let update;
+      try {
+        update =
+          await (options?.memoize ? checkCdnUpdateMemoized : checkCdnUpdate)(
+            url,
+            options,
+          );
+      } catch (err) {
+        if (options?.onError) options.onError(filePath, url, err);
+        else {
+          throw new Error(
+            `Checking URL ${url} in ${filePath} failed: ${err.message}`,
+          );
+        }
+      }
       if (update) {
-        const [startIndex, endIndex] = urlMatch.indices![0]!;
-        const start = lines.locationForIndex(startIndex)!;
-        yield { filePath, startIndex, endIndex, start, update };
+        const [start, end] = urlMatch.indices![0]!;
+        const location = lines.locationForIndex(start)!;
+        yield { filePath, index: { start, end }, location, update };
       }
     }));
 }

@@ -1,98 +1,191 @@
-import { error } from "https://deno.land/std@0.221.0/log/error.ts";
-import { info, warn } from "https://deno.land/std@0.221.0/log/mod.ts";
-import { format } from "https://deno.land/std@0.221.0/semver/format.ts";
-import { lessOrEqual } from "https://deno.land/std@0.221.0/semver/less_or_equal.ts";
-import { parse } from "https://deno.land/std@0.221.0/semver/parse.ts";
-import { SemVer } from "https://deno.land/std@0.221.0/semver/types.ts";
+import { info } from "https://deno.land/std@0.221.0/log/info.ts";
 import memoize from "https://esm.sh/memoizee@0.4.15";
-import tryCatch from "https://esm.sh/ramda@0.29.1/src/tryCatch";
 import { match } from "https://esm.sh/ts-pattern@5.0.8";
 
 export const RELEASE_TYPES = ["patch", "minor", "major"] as const;
 
 const versionRegexp =
-  /@(?<range>(?:\^|~|<=?|==?)?v?(?<version>(?:\d+|[*x])(?:\.(?:\d+|[*x])){0,2}(?:-[\w\d_.+-]+)?))(?=\W|$)/di;
+  /@(?<op>\^|~|<=?|==?)?(?<v>v)?(?<v1>\d+|[*x])(?:\.(?<v2>\d+|[*x]))?(?:\.(?<v3>\d+|[*x]))?(?:-(?<pre>[\w\d_.+-]+))?(?=\W|$)/di;
 
 export interface CdnUpdate {
+  currentUrl: string;
+  currentVersion: CdnVersion;
   baseUrl: string;
-  url: string;
   latestUrl: string;
-  version: SemVer;
-  latestVersion: SemVer;
-  release: string;
+  latestVersion: CdnVersion;
+  release: typeof RELEASE_TYPES[number];
 }
 
-export const checkCdnUpdate = memoize(
-  async function checkCdnUpdate(
-    url: string,
-    maxRelease: (typeof RELEASE_TYPES)[number],
-  ): Promise<CdnUpdate | null> {
-    // parse current version from url
-    const versionMatch = url.match(versionRegexp);
-    if (versionMatch?.groups?.version == null) return null;
-    const version = tryCatch(
-      parse,
-      (error) => void warn(`Parsing version for ${url} failed: ${error}`),
-    )(versionMatch.groups.version);
-    if (version == null) return null;
+export interface CheckUpdateOptions {
+  maxUpdate?: (typeof RELEASE_TYPES)[number] | undefined;
+  fetch?: typeof fetch | undefined;
+}
 
-    // get base url which should redirect to latest version
-    const baseVersion = match(maxRelease)
-      .with("major", () => "")
-      .with("minor", () => `@${version.major}`)
-      .with("patch", () => `@${version.major}.${version.minor}`)
-      .exhaustive();
-    const baseUrl = url.substring(0, versionMatch.indices![0]![0]) +
-      baseVersion +
-      url.substring(versionMatch.indices![0]![1]);
-
-    // fetch base url and get latest version
-    const response = await fetch(baseUrl, { method: "HEAD" });
-    if (!response.ok) {
-      error(
-        `Fetching ${baseUrl} failed: ${response.status} ${response.statusText}`,
-      );
-      return null;
-    }
-    const latestUrl = new URL(response.url, baseUrl).href;
-    if (latestUrl === baseUrl) {
-      warn(`No redirect for ${baseUrl}`);
-      return null;
-    }
-    if (latestUrl === url) return null;
-    const latestVersionMatch = latestUrl.match(versionRegexp);
-    if (latestVersionMatch?.groups?.version == null) {
-      warn(`No version in ${latestUrl}`);
-      return null;
-    }
-    const latestVersion = tryCatch(
-      parse,
-      (error) =>
-        void warn(`Parsing latest version for ${latestUrl} failed: ${error}`),
-    )(latestVersionMatch.groups.version);
-    if (latestVersion == null) return null;
-
-    // compare versions and get release type
-    if (lessOrEqual(latestVersion, version)) return null;
-    let release;
-    if (version.major !== latestVersion.major) release = "major";
-    else if (version.minor !== latestVersion.minor) {
-      if (version.major === 0) release = "major";
-      else release = "minor";
-    } else if (version.patch !== latestVersion.patch) {
-      if (version.major === 0 && version.minor === 0) release = "major";
-      else if (version.major === 0) release = "minor";
-      else release = "patch";
-    }
-    if (release == null) return null;
-
-    // log and return update info
-    info(
-      `Found update for ${baseUrl}: ${format(version)} -> ${
-        format(latestVersion)
-      } (${release})`,
-    );
-    return { baseUrl, url, latestUrl, version, latestVersion, release };
+export const checkCdnUpdateMemoized = memoize(
+  checkCdnUpdate,
+  {
+    promise: true,
+    normalizer: (args) => JSON.stringify(args),
   },
-  { promise: true },
 );
+
+/**
+ * Check if a CDN URL can be updated to a newer version.
+ *
+ * @returns Update info or null if either the URL doesn't contain a version or the latest version is the same as current version.
+ * @throws when fetching the update fails or the response is not correct.
+ */
+export async function checkCdnUpdate(
+  currentUrl: string,
+  options?: CheckUpdateOptions,
+): Promise<CdnUpdate | null> {
+  const maxUpdate = options?.maxUpdate ?? "major";
+
+  // parse current version from url
+  const currentVersion = parseCdnVersion(currentUrl);
+  if (currentVersion == null) return null;
+
+  // check if current version doesn't already allow any possible update
+  if (currentVersion.major == null) {
+    throw new Error(`No major version in ${currentVersion.match}`);
+  }
+  if (currentVersion.minor == null && maxUpdate !== "major") {
+    throw new Error(
+      `No minor version in ${currentVersion.match} and max update is not major`,
+    );
+  }
+  if (currentVersion.patch == null && maxUpdate === "patch") {
+    throw new Error(
+      `No patch version in ${currentVersion.match} and max update is patch`,
+    );
+  }
+
+  // get base url which should redirect to latest version
+  const baseVersion = match(maxUpdate)
+    .with("major", () => "")
+    .with("minor", () => `@${currentVersion.prefix}${currentVersion.major}`)
+    .with(
+      "patch",
+      () =>
+        `@${currentVersion.prefix}${currentVersion.major}.${currentVersion.minor}`,
+    )
+    .exhaustive();
+  const baseUrl = currentUrl.substring(0, currentVersion.index.start) +
+    baseVersion +
+    currentUrl.substring(currentVersion.index.end);
+
+  // fetch base url and look for redirect
+  const localFetch = options?.fetch ?? globalThis.fetch;
+  let response;
+  try {
+    info(`Fetching ${baseUrl}`);
+    response = await localFetch(baseUrl, { method: "HEAD" });
+  } catch (error) {
+    throw new Error(`Fetching ${baseUrl} failed: ${error}`);
+  }
+  if (!response.ok) {
+    throw new Error(
+      `Fetching ${baseUrl} failed: ${response.status} ${response.statusText}`,
+    );
+  }
+  const latestUrl = new URL(response.url, baseUrl).href;
+  if (latestUrl === baseUrl) {
+    throw new Error(`No redirect for ${baseUrl}`);
+  }
+
+  // parse latest version from redirect url
+  const latestVersion = parseCdnVersion(latestUrl);
+  if (latestVersion == null) {
+    throw new Error(`No version in latest URL ${latestUrl}`);
+  }
+
+  // check if latest version is an exact version
+  if (
+    latestVersion.major == null ||
+    latestVersion.minor == null ||
+    latestVersion.patch == null
+  ) {
+    throw new Error(
+      `Latest version ${latestVersion.match} is not an exact version`,
+    );
+  }
+
+  // abort if latest version is lower or equal to current version
+  if (
+    (latestVersion.major < currentVersion.major) ||
+    (latestVersion.major === currentVersion.major &&
+      currentVersion.minor != null &&
+      latestVersion.minor < currentVersion.minor) ||
+    (latestVersion.major === currentVersion.major &&
+      latestVersion.minor === currentVersion.minor &&
+      currentVersion.patch != null &&
+      latestVersion.patch < currentVersion.patch)
+  ) {
+    throw new Error(
+      `Latest version ${latestVersion.match} is lower than current version ${currentVersion.match}`,
+    );
+  }
+
+  // compare versions to get release type
+  let release: typeof RELEASE_TYPES[number];
+  if (currentVersion.major !== latestVersion.major) release = "major";
+  else if (currentVersion.minor !== latestVersion.minor) {
+    if (currentVersion.major === 0) {
+      release = "major";
+    } else {
+      release = "minor";
+    }
+  } else if (currentVersion.patch !== latestVersion.patch) {
+    if (currentVersion.major === 0 && currentVersion.minor === 0) {
+      release = "major";
+    } else if (currentVersion.major === 0) {
+      release = "minor";
+    } else {
+      release = "patch";
+    }
+  } else {
+    return null;
+  }
+
+  // return update info
+  return {
+    baseUrl,
+    currentUrl,
+    latestUrl,
+    currentVersion,
+    latestVersion,
+    release,
+  };
+}
+
+export interface CdnVersion {
+  prefix: string;
+  major: number | null;
+  minor: number | null;
+  patch: number | null;
+  prerelease: string | null;
+  index: { start: number; end: number };
+  match: string;
+}
+
+export function parseCdnVersion(url: string): CdnVersion | null {
+  const match = url.match(versionRegexp);
+  if (match == null) return null;
+  const prefix = (match.groups!.op ?? "") + (match.groups!.v ?? "");
+  const major = parseInt(match.groups!.v1!, 10);
+  const minor = parseInt(match.groups!.v2 ?? "", 10);
+  const patch = parseInt(match.groups!.v3 ?? "", 10);
+  const pre = match.groups!.pre;
+  return {
+    prefix,
+    major: Number.isNaN(major) ? null : major,
+    minor: Number.isNaN(minor) ? null : minor,
+    patch: Number.isNaN(patch) ? null : patch,
+    prerelease: pre ?? null,
+    index: {
+      start: match.index!,
+      end: match.index! + match[0].length,
+    },
+    match: match[0],
+  };
+}

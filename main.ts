@@ -1,17 +1,15 @@
 import { parseArgs } from "https://deno.land/std@0.221.0/cli/parse_args.ts";
 import { bold, underline } from "https://deno.land/std@0.221.0/fmt/colors.ts";
+import { error } from "https://deno.land/std@0.221.0/log/error.ts";
 import { setup } from "https://deno.land/std@0.221.0/log/setup.ts";
 import { globToRegExp } from "https://deno.land/std@0.221.0/path/glob_to_regexp.ts";
 import { z } from "https://esm.sh/zod@3.22.4";
-import { CdnUpdate, checkCdnUpdate, RELEASE_TYPES } from "./checkCdnUpdate.ts";
+import { RELEASE_TYPES } from "./checkCdnUpdate.ts";
 import {
   defaultExtensions,
   defaultIgnorePatterns,
-  listDirUpdates,
-  listFileUpdates,
+  ListDirUpdatesOptions,
   listUpdates,
-  ListUpdatesOptions,
-  UpdateEntry,
 } from "./listUpdates.ts";
 import { writeUpdates } from "./writeUpdates.ts";
 
@@ -21,7 +19,7 @@ ${bold(`NAME`)}
   cdnup - Check for outdated imports from CDNs in your project
 
 ${bold(`SYNOPSIS`)}
-  ${bold(`deno`)} run ${bold(`https://deno.land/x/cdnup/mod.ts`)} [${underline(`OPTION`)}]... [${underline(`PATH`)}]...
+  ${bold(`deno`)} run ${bold(`https://deno.land/x/cdnup/main.ts`)} [${underline(`OPTION`)}]... [${underline(`PATH`)}]...
 
 ${bold(`DESCRIPTION`)}
   Checks every file in ${underline(`PATH`)} for outdated imports from CDNs.
@@ -45,22 +43,33 @@ ${bold(`OPTIONS`)}
     Additional file extensions to check when recursively walking directories.
     Can be comma-separated or specified multiple times.
     By default, ${new Intl.ListFormat("en").format(defaultExtensions)} files are checked.
+    See: https://deno.land/std@0.221.0/fs/walk.ts?s=WalkOptions#prop_exts
 
   ${bold(`--ignore`)} ${underline(`PATTERN`)}
     Additional paths to ignore when recursively walking directories.
     Can be specified multiple times.
     Supports glob syntax.
     By default, ${new Intl.ListFormat("en").format(defaultIgnorePatterns.map((pattern) => pattern.source.slice(1, -1)))} paths are ignored.
+    See:
+    https://deno.land/std@0.221.0/path/glob_to_regexp.ts?s=globToRegExp
+    https://deno.land/std@0.221.0/fs/walk.ts?s=WalkOptions#prop_skip
 
   ${bold(`--max-update`)} ${underline(`RELEASE`)}
     Try to find updates up to the specified release type.
     This doesn't work for all CDNs.
     Possible values are: ${new Intl.ListFormat("en").format(RELEASE_TYPES)}.
-    Default: major (just request the latest version).
+    Default: major (just request the same URL but without version).
 `;
 
 if (import.meta.main) {
-  const options = parseArgs(Deno.args, {
+  await runCdnUp(Deno.args);
+}
+
+export async function runCdnUp(
+  args: string[],
+  overrideOptions?: Partial<ListDirUpdatesOptions>,
+) {
+  const options = parseArgs(args, {
     boolean: ["help", "interactive", "verbose", "write"],
     string: ["extensions", "ignorePatterns", "maxUpdate"],
     collect: ["extensions", "ignorePatterns"],
@@ -97,25 +106,22 @@ if (import.meta.main) {
   if (options.help) {
     console.log(helpText);
   } else {
-    const updates = await Array.fromAsync(listUpdates(
-      paths,
-      {
-        maxUpdate,
-        extensions,
-        ignorePatterns,
-      },
-    ));
+    const updates = new Set(
+      await Array.fromAsync(listUpdates(
+        paths,
+        {
+          onError: (filePath, url, err) => {
+            error(`Failed to update ${url} in ${filePath}: ${err.message}`);
+          },
+          memoize: true,
+          maxUpdate,
+          extensions,
+          ignorePatterns,
+          ...overrideOptions,
+        },
+      )),
+    );
     await writeUpdates(updates, options);
+    return { updates };
   }
 }
-
-export {
-  type CdnUpdate,
-  checkCdnUpdate,
-  listDirUpdates,
-  listFileUpdates,
-  listUpdates,
-  type ListUpdatesOptions,
-  type UpdateEntry,
-  writeUpdates,
-};

@@ -2,12 +2,13 @@
 
 Check for outdated imports from CDNs in your project.
 
-It works by requesting every URL without version and expects a redirect to the latest version.
+It searches for all the URLs in the project which contain `@<version>`.
+It then fetches every URL and expects a redirect to the latest version.
 
 ## Synopsis
 
 ```sh
-deno run https://deno.land/x/cdnup/mod.ts [OPTION]... [PATH]...
+deno run https://deno.land/x/cdnup/main.ts [OPTION]... [PATH]...
 ```
 
 ## Description
@@ -27,7 +28,7 @@ When not specified, the current directory is checked recursively.
 ## Example
 
 ```sh
-deno run --allow-read --allow-net https://deno.land/x/cdnup/mod.ts
+deno run --allow-read --allow-net https://deno.land/x/cdnup/main.ts
 ```
 
 ```txt

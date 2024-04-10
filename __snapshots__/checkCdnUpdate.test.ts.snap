@@ -1,0 +1,1609 @@
+export const snapshot = {};
+
+snapshot[`updates to latest version 1`] = `
+{
+  ok: true,
+  value: null,
+}
+`;
+
+snapshot[`updates to latest version 2`] = `
+{
+  ok: true,
+  value: null,
+}
+`;
+
+snapshot[`updates to latest version 3`] = `
+{
+  ok: true,
+  value: null,
+}
+`;
+
+snapshot[`updates to latest version 4`] = `
+{
+  ok: true,
+  value: null,
+}
+`;
+
+snapshot[`updates to latest version 5`] = `
+{
+  error: "No major version in @x.x.x",
+  ok: false,
+}
+`;
+
+snapshot[`updates to latest version 6`] = `
+{
+  ok: true,
+  value: {
+    baseUrl: "https://libs.example.com/foo",
+    currentUrl: "https://libs.example.com/foo@1",
+    currentVersion: {
+      index: {
+        end: 30,
+        start: 28,
+      },
+      major: 1,
+      match: "@1",
+      minor: null,
+      patch: null,
+      prefix: "",
+      prerelease: null,
+    },
+    latestUrl: "https://libs.example.com/foo@2.3.4",
+    latestVersion: {
+      index: {
+        end: 34,
+        start: 28,
+      },
+      major: 2,
+      match: "@2.3.4",
+      minor: 3,
+      patch: 4,
+      prefix: "",
+      prerelease: null,
+    },
+    release: "major",
+  },
+}
+`;
+
+snapshot[`updates to latest version 7`] = `
+{
+  ok: true,
+  value: {
+    baseUrl: "https://libs.example.com/foo",
+    currentUrl: "https://libs.example.com/foo@1.x.x",
+    currentVersion: {
+      index: {
+        end: 34,
+        start: 28,
+      },
+      major: 1,
+      match: "@1.x.x",
+      minor: null,
+      patch: null,
+      prefix: "",
+      prerelease: null,
+    },
+    latestUrl: "https://libs.example.com/foo@2.3.4",
+    latestVersion: {
+      index: {
+        end: 34,
+        start: 28,
+      },
+      major: 2,
+      match: "@2.3.4",
+      minor: 3,
+      patch: 4,
+      prefix: "",
+      prerelease: null,
+    },
+    release: "major",
+  },
+}
+`;
+
+snapshot[`updates to latest version 8`] = `
+{
+  ok: true,
+  value: {
+    baseUrl: "https://libs.example.com/foo",
+    currentUrl: "https://libs.example.com/foo@v1",
+    currentVersion: {
+      index: {
+        end: 31,
+        start: 28,
+      },
+      major: 1,
+      match: "@v1",
+      minor: null,
+      patch: null,
+      prefix: "v",
+      prerelease: null,
+    },
+    latestUrl: "https://libs.example.com/foo@2.3.4",
+    latestVersion: {
+      index: {
+        end: 34,
+        start: 28,
+      },
+      major: 2,
+      match: "@2.3.4",
+      minor: 3,
+      patch: 4,
+      prefix: "",
+      prerelease: null,
+    },
+    release: "major",
+  },
+}
+`;
+
+snapshot[`updates to latest version 9`] = `
+{
+  ok: true,
+  value: {
+    baseUrl: "https://libs.example.com/foo",
+    currentUrl: "https://libs.example.com/foo@1.2",
+    currentVersion: {
+      index: {
+        end: 32,
+        start: 28,
+      },
+      major: 1,
+      match: "@1.2",
+      minor: 2,
+      patch: null,
+      prefix: "",
+      prerelease: null,
+    },
+    latestUrl: "https://libs.example.com/foo@2.3.4",
+    latestVersion: {
+      index: {
+        end: 34,
+        start: 28,
+      },
+      major: 2,
+      match: "@2.3.4",
+      minor: 3,
+      patch: 4,
+      prefix: "",
+      prerelease: null,
+    },
+    release: "major",
+  },
+}
+`;
+
+snapshot[`updates to latest version 10`] = `
+{
+  ok: true,
+  value: {
+    baseUrl: "https://libs.example.com/foo",
+    currentUrl: "https://libs.example.com/foo@1.2.*",
+    currentVersion: {
+      index: {
+        end: 34,
+        start: 28,
+      },
+      major: 1,
+      match: "@1.2.*",
+      minor: 2,
+      patch: null,
+      prefix: "",
+      prerelease: null,
+    },
+    latestUrl: "https://libs.example.com/foo@2.3.4",
+    latestVersion: {
+      index: {
+        end: 34,
+        start: 28,
+      },
+      major: 2,
+      match: "@2.3.4",
+      minor: 3,
+      patch: 4,
+      prefix: "",
+      prerelease: null,
+    },
+    release: "major",
+  },
+}
+`;
+
+snapshot[`updates to latest version 11`] = `
+{
+  ok: true,
+  value: {
+    baseUrl: "https://libs.example.com/foo",
+    currentUrl: "https://libs.example.com/foo@v1.2",
+    currentVersion: {
+      index: {
+        end: 33,
+        start: 28,
+      },
+      major: 1,
+      match: "@v1.2",
+      minor: 2,
+      patch: null,
+      prefix: "v",
+      prerelease: null,
+    },
+    latestUrl: "https://libs.example.com/foo@2.3.4",
+    latestVersion: {
+      index: {
+        end: 34,
+        start: 28,
+      },
+      major: 2,
+      match: "@2.3.4",
+      minor: 3,
+      patch: 4,
+      prefix: "",
+      prerelease: null,
+    },
+    release: "major",
+  },
+}
+`;
+
+snapshot[`updates to latest version 12`] = `
+{
+  ok: true,
+  value: {
+    baseUrl: "https://libs.example.com/foo",
+    currentUrl: "https://libs.example.com/foo@1.2.3",
+    currentVersion: {
+      index: {
+        end: 34,
+        start: 28,
+      },
+      major: 1,
+      match: "@1.2.3",
+      minor: 2,
+      patch: 3,
+      prefix: "",
+      prerelease: null,
+    },
+    latestUrl: "https://libs.example.com/foo@2.3.4",
+    latestVersion: {
+      index: {
+        end: 34,
+        start: 28,
+      },
+      major: 2,
+      match: "@2.3.4",
+      minor: 3,
+      patch: 4,
+      prefix: "",
+      prerelease: null,
+    },
+    release: "major",
+  },
+}
+`;
+
+snapshot[`updates to latest version 13`] = `
+{
+  ok: true,
+  value: {
+    baseUrl: "https://libs.example.com/foo",
+    currentUrl: "https://libs.example.com/foo@v1.2.3",
+    currentVersion: {
+      index: {
+        end: 35,
+        start: 28,
+      },
+      major: 1,
+      match: "@v1.2.3",
+      minor: 2,
+      patch: 3,
+      prefix: "v",
+      prerelease: null,
+    },
+    latestUrl: "https://libs.example.com/foo@2.3.4",
+    latestVersion: {
+      index: {
+        end: 34,
+        start: 28,
+      },
+      major: 2,
+      match: "@2.3.4",
+      minor: 3,
+      patch: 4,
+      prefix: "",
+      prerelease: null,
+    },
+    release: "major",
+  },
+}
+`;
+
+snapshot[`updates to latest version 14`] = `
+{
+  ok: true,
+  value: {
+    baseUrl: "https://libs.example.com/foo",
+    currentUrl: "https://libs.example.com/foo@1.2.3",
+    currentVersion: {
+      index: {
+        end: 34,
+        start: 28,
+      },
+      major: 1,
+      match: "@1.2.3",
+      minor: 2,
+      patch: 3,
+      prefix: "",
+      prerelease: null,
+    },
+    latestUrl: "https://libs.example.com/foo@2.3.4",
+    latestVersion: {
+      index: {
+        end: 34,
+        start: 28,
+      },
+      major: 2,
+      match: "@2.3.4",
+      minor: 3,
+      patch: 4,
+      prefix: "",
+      prerelease: null,
+    },
+    release: "major",
+  },
+}
+`;
+
+snapshot[`updates to latest version 15`] = `
+{
+  ok: true,
+  value: {
+    baseUrl: "https://libs.example.com/foo/index.js",
+    currentUrl: "https://libs.example.com/foo@1.2.3/index.js",
+    currentVersion: {
+      index: {
+        end: 34,
+        start: 28,
+      },
+      major: 1,
+      match: "@1.2.3",
+      minor: 2,
+      patch: 3,
+      prefix: "",
+      prerelease: null,
+    },
+    latestUrl: "https://libs.example.com/foo@2.3.4/index.js",
+    latestVersion: {
+      index: {
+        end: 34,
+        start: 28,
+      },
+      major: 2,
+      match: "@2.3.4",
+      minor: 3,
+      patch: 4,
+      prefix: "",
+      prerelease: null,
+    },
+    release: "major",
+  },
+}
+`;
+
+snapshot[`updates to latest version 16`] = `
+{
+  ok: true,
+  value: {
+    baseUrl: "https://libs.example.com/foo?bar=baz",
+    currentUrl: "https://libs.example.com/foo@1.2.3?bar=baz",
+    currentVersion: {
+      index: {
+        end: 34,
+        start: 28,
+      },
+      major: 1,
+      match: "@1.2.3",
+      minor: 2,
+      patch: 3,
+      prefix: "",
+      prerelease: null,
+    },
+    latestUrl: "https://libs.example.com/foo@2.3.4?bar=baz",
+    latestVersion: {
+      index: {
+        end: 34,
+        start: 28,
+      },
+      major: 2,
+      match: "@2.3.4",
+      minor: 3,
+      patch: 4,
+      prefix: "",
+      prerelease: null,
+    },
+    release: "major",
+  },
+}
+`;
+
+snapshot[`updates to latest version 17`] = `
+{
+  ok: true,
+  value: {
+    baseUrl: "https://libs.example.com/foo",
+    currentUrl: "https://libs.example.com/foo@1.2.3-beta",
+    currentVersion: {
+      index: {
+        end: 39,
+        start: 28,
+      },
+      major: 1,
+      match: "@1.2.3-beta",
+      minor: 2,
+      patch: 3,
+      prefix: "",
+      prerelease: "beta",
+    },
+    latestUrl: "https://libs.example.com/foo@2.3.4",
+    latestVersion: {
+      index: {
+        end: 34,
+        start: 28,
+      },
+      major: 2,
+      match: "@2.3.4",
+      minor: 3,
+      patch: 4,
+      prefix: "",
+      prerelease: null,
+    },
+    release: "major",
+  },
+}
+`;
+
+snapshot[`updates to latest version 18`] = `
+{
+  ok: true,
+  value: {
+    baseUrl: "https://libs.example.com/foo",
+    currentUrl: "https://libs.example.com/foo@2.2.3",
+    currentVersion: {
+      index: {
+        end: 34,
+        start: 28,
+      },
+      major: 2,
+      match: "@2.2.3",
+      minor: 2,
+      patch: 3,
+      prefix: "",
+      prerelease: null,
+    },
+    latestUrl: "https://libs.example.com/foo@2.3.4",
+    latestVersion: {
+      index: {
+        end: 34,
+        start: 28,
+      },
+      major: 2,
+      match: "@2.3.4",
+      minor: 3,
+      patch: 4,
+      prefix: "",
+      prerelease: null,
+    },
+    release: "minor",
+  },
+}
+`;
+
+snapshot[`updates to latest version 19`] = `
+{
+  ok: true,
+  value: {
+    baseUrl: "https://libs.example.com/foo",
+    currentUrl: "https://libs.example.com/foo@2.3.3",
+    currentVersion: {
+      index: {
+        end: 34,
+        start: 28,
+      },
+      major: 2,
+      match: "@2.3.3",
+      minor: 3,
+      patch: 3,
+      prefix: "",
+      prerelease: null,
+    },
+    latestUrl: "https://libs.example.com/foo@2.3.4",
+    latestVersion: {
+      index: {
+        end: 34,
+        start: 28,
+      },
+      major: 2,
+      match: "@2.3.4",
+      minor: 3,
+      patch: 4,
+      prefix: "",
+      prerelease: null,
+    },
+    release: "patch",
+  },
+}
+`;
+
+snapshot[`updates to latest version 20`] = `
+{
+  ok: true,
+  value: null,
+}
+`;
+
+snapshot[`updates to latest version 21`] = `
+{
+  ok: true,
+  value: {
+    baseUrl: "https://libs.example.com/foo",
+    currentUrl: "https://libs.example.com/foo@2.3",
+    currentVersion: {
+      index: {
+        end: 32,
+        start: 28,
+      },
+      major: 2,
+      match: "@2.3",
+      minor: 3,
+      patch: null,
+      prefix: "",
+      prerelease: null,
+    },
+    latestUrl: "https://libs.example.com/foo@2.3.4",
+    latestVersion: {
+      index: {
+        end: 34,
+        start: 28,
+      },
+      major: 2,
+      match: "@2.3.4",
+      minor: 3,
+      patch: 4,
+      prefix: "",
+      prerelease: null,
+    },
+    release: "patch",
+  },
+}
+`;
+
+snapshot[`updates to latest version 22`] = `
+{
+  ok: true,
+  value: {
+    baseUrl: "https://libs.example.com/foo",
+    currentUrl: "https://libs.example.com/foo@2",
+    currentVersion: {
+      index: {
+        end: 30,
+        start: 28,
+      },
+      major: 2,
+      match: "@2",
+      minor: null,
+      patch: null,
+      prefix: "",
+      prerelease: null,
+    },
+    latestUrl: "https://libs.example.com/foo@2.3.4",
+    latestVersion: {
+      index: {
+        end: 34,
+        start: 28,
+      },
+      major: 2,
+      match: "@2.3.4",
+      minor: 3,
+      patch: 4,
+      prefix: "",
+      prerelease: null,
+    },
+    release: "minor",
+  },
+}
+`;
+
+snapshot[`updates to latest version 23`] = `
+{
+  error: "Latest version @2.3.4 is lower than current version @2.3.5",
+  ok: false,
+}
+`;
+
+snapshot[`updates to latest version 24`] = `
+{
+  error: "Latest version @2.3.4 is lower than current version @2.4.5",
+  ok: false,
+}
+`;
+
+snapshot[`updates to latest version 25`] = `
+{
+  error: "Latest version @2.3.4 is lower than current version @3.4.5",
+  ok: false,
+}
+`;
+
+snapshot[`updates to latest version 26`] = `
+{
+  ok: true,
+  value: {
+    baseUrl: "https://libs.example.com/foo",
+    currentUrl: "https://libs.example.com/foo@0.1.2",
+    currentVersion: {
+      index: {
+        end: 34,
+        start: 28,
+      },
+      major: 0,
+      match: "@0.1.2",
+      minor: 1,
+      patch: 2,
+      prefix: "",
+      prerelease: null,
+    },
+    latestUrl: "https://libs.example.com/foo@2.3.4",
+    latestVersion: {
+      index: {
+        end: 34,
+        start: 28,
+      },
+      major: 2,
+      match: "@2.3.4",
+      minor: 3,
+      patch: 4,
+      prefix: "",
+      prerelease: null,
+    },
+    release: "major",
+  },
+}
+`;
+
+snapshot[`updates to latest version 27`] = `
+{
+  ok: true,
+  value: {
+    baseUrl: "https://libs.example.com/foo",
+    currentUrl: "https://libs.example.com/foo@0.0.1",
+    currentVersion: {
+      index: {
+        end: 34,
+        start: 28,
+      },
+      major: 0,
+      match: "@0.0.1",
+      minor: 0,
+      patch: 1,
+      prefix: "",
+      prerelease: null,
+    },
+    latestUrl: "https://libs.example.com/foo@2.3.4",
+    latestVersion: {
+      index: {
+        end: 34,
+        start: 28,
+      },
+      major: 2,
+      match: "@2.3.4",
+      minor: 3,
+      patch: 4,
+      prefix: "",
+      prerelease: null,
+    },
+    release: "major",
+  },
+}
+`;
+
+snapshot[`updates to latest version 28`] = `
+{
+  error: "Fetching https://libs.example.com/unknown failed: 404 ",
+  ok: false,
+}
+`;
+
+snapshot[`updates to latest version 29`] = `
+{
+  error: "Fetching https://not-exists.example.com/foo failed: Error: Network error",
+  ok: false,
+}
+`;
+
+snapshot[`updates to latest version 30`] = `
+{
+  error: "No redirect for https://no-redirect.example.com/foo",
+  ok: false,
+}
+`;
+
+snapshot[`updates to latest version 31`] = `
+{
+  error: "No version in latest URL https://bad-redirect.example.com/bar",
+  ok: false,
+}
+`;
+
+snapshot[`updates with max update minor 1`] = `
+{
+  ok: true,
+  value: null,
+}
+`;
+
+snapshot[`updates with max update minor 2`] = `
+{
+  ok: true,
+  value: null,
+}
+`;
+
+snapshot[`updates with max update minor 3`] = `
+{
+  ok: true,
+  value: null,
+}
+`;
+
+snapshot[`updates with max update minor 4`] = `
+{
+  ok: true,
+  value: null,
+}
+`;
+
+snapshot[`updates with max update minor 5`] = `
+{
+  error: "No major version in @x.x.x",
+  ok: false,
+}
+`;
+
+snapshot[`updates with max update minor 6`] = `
+{
+  error: "No minor version in @1 and max update is not major",
+  ok: false,
+}
+`;
+
+snapshot[`updates with max update minor 7`] = `
+{
+  error: "No minor version in @1.x.x and max update is not major",
+  ok: false,
+}
+`;
+
+snapshot[`updates with max update minor 8`] = `
+{
+  error: "No minor version in @v1 and max update is not major",
+  ok: false,
+}
+`;
+
+snapshot[`updates with max update minor 9`] = `
+{
+  ok: true,
+  value: {
+    baseUrl: "https://libs.example.com/foo@1",
+    currentUrl: "https://libs.example.com/foo@1.2",
+    currentVersion: {
+      index: {
+        end: 32,
+        start: 28,
+      },
+      major: 1,
+      match: "@1.2",
+      minor: 2,
+      patch: null,
+      prefix: "",
+      prerelease: null,
+    },
+    latestUrl: "https://libs.example.com/foo@1.4.5",
+    latestVersion: {
+      index: {
+        end: 34,
+        start: 28,
+      },
+      major: 1,
+      match: "@1.4.5",
+      minor: 4,
+      patch: 5,
+      prefix: "",
+      prerelease: null,
+    },
+    release: "minor",
+  },
+}
+`;
+
+snapshot[`updates with max update minor 10`] = `
+{
+  ok: true,
+  value: {
+    baseUrl: "https://libs.example.com/foo@1",
+    currentUrl: "https://libs.example.com/foo@1.2.*",
+    currentVersion: {
+      index: {
+        end: 34,
+        start: 28,
+      },
+      major: 1,
+      match: "@1.2.*",
+      minor: 2,
+      patch: null,
+      prefix: "",
+      prerelease: null,
+    },
+    latestUrl: "https://libs.example.com/foo@1.4.5",
+    latestVersion: {
+      index: {
+        end: 34,
+        start: 28,
+      },
+      major: 1,
+      match: "@1.4.5",
+      minor: 4,
+      patch: 5,
+      prefix: "",
+      prerelease: null,
+    },
+    release: "minor",
+  },
+}
+`;
+
+snapshot[`updates with max update minor 11`] = `
+{
+  ok: true,
+  value: {
+    baseUrl: "https://libs.example.com/foo@v1",
+    currentUrl: "https://libs.example.com/foo@v1.2",
+    currentVersion: {
+      index: {
+        end: 33,
+        start: 28,
+      },
+      major: 1,
+      match: "@v1.2",
+      minor: 2,
+      patch: null,
+      prefix: "v",
+      prerelease: null,
+    },
+    latestUrl: "https://libs.example.com/foo@v1.4.5",
+    latestVersion: {
+      index: {
+        end: 35,
+        start: 28,
+      },
+      major: 1,
+      match: "@v1.4.5",
+      minor: 4,
+      patch: 5,
+      prefix: "v",
+      prerelease: null,
+    },
+    release: "minor",
+  },
+}
+`;
+
+snapshot[`updates with max update minor 12`] = `
+{
+  ok: true,
+  value: {
+    baseUrl: "https://libs.example.com/foo@1",
+    currentUrl: "https://libs.example.com/foo@1.2.3",
+    currentVersion: {
+      index: {
+        end: 34,
+        start: 28,
+      },
+      major: 1,
+      match: "@1.2.3",
+      minor: 2,
+      patch: 3,
+      prefix: "",
+      prerelease: null,
+    },
+    latestUrl: "https://libs.example.com/foo@1.4.5",
+    latestVersion: {
+      index: {
+        end: 34,
+        start: 28,
+      },
+      major: 1,
+      match: "@1.4.5",
+      minor: 4,
+      patch: 5,
+      prefix: "",
+      prerelease: null,
+    },
+    release: "minor",
+  },
+}
+`;
+
+snapshot[`updates with max update minor 13`] = `
+{
+  ok: true,
+  value: {
+    baseUrl: "https://libs.example.com/foo@v1",
+    currentUrl: "https://libs.example.com/foo@v1.2.3",
+    currentVersion: {
+      index: {
+        end: 35,
+        start: 28,
+      },
+      major: 1,
+      match: "@v1.2.3",
+      minor: 2,
+      patch: 3,
+      prefix: "v",
+      prerelease: null,
+    },
+    latestUrl: "https://libs.example.com/foo@v1.4.5",
+    latestVersion: {
+      index: {
+        end: 35,
+        start: 28,
+      },
+      major: 1,
+      match: "@v1.4.5",
+      minor: 4,
+      patch: 5,
+      prefix: "v",
+      prerelease: null,
+    },
+    release: "minor",
+  },
+}
+`;
+
+snapshot[`updates with max update minor 14`] = `
+{
+  ok: true,
+  value: {
+    baseUrl: "https://libs.example.com/foo@1",
+    currentUrl: "https://libs.example.com/foo@1.2.3",
+    currentVersion: {
+      index: {
+        end: 34,
+        start: 28,
+      },
+      major: 1,
+      match: "@1.2.3",
+      minor: 2,
+      patch: 3,
+      prefix: "",
+      prerelease: null,
+    },
+    latestUrl: "https://libs.example.com/foo@1.4.5",
+    latestVersion: {
+      index: {
+        end: 34,
+        start: 28,
+      },
+      major: 1,
+      match: "@1.4.5",
+      minor: 4,
+      patch: 5,
+      prefix: "",
+      prerelease: null,
+    },
+    release: "minor",
+  },
+}
+`;
+
+snapshot[`updates with max update minor 15`] = `
+{
+  error: "Fetching https://libs.example.com/foo@1/index.js failed: 404 ",
+  ok: false,
+}
+`;
+
+snapshot[`updates with max update minor 16`] = `
+{
+  error: "Fetching https://libs.example.com/foo@1?bar=baz failed: 404 ",
+  ok: false,
+}
+`;
+
+snapshot[`updates with max update minor 17`] = `
+{
+  ok: true,
+  value: {
+    baseUrl: "https://libs.example.com/foo@1",
+    currentUrl: "https://libs.example.com/foo@1.2.3-beta",
+    currentVersion: {
+      index: {
+        end: 39,
+        start: 28,
+      },
+      major: 1,
+      match: "@1.2.3-beta",
+      minor: 2,
+      patch: 3,
+      prefix: "",
+      prerelease: "beta",
+    },
+    latestUrl: "https://libs.example.com/foo@1.4.5",
+    latestVersion: {
+      index: {
+        end: 34,
+        start: 28,
+      },
+      major: 1,
+      match: "@1.4.5",
+      minor: 4,
+      patch: 5,
+      prefix: "",
+      prerelease: null,
+    },
+    release: "minor",
+  },
+}
+`;
+
+snapshot[`updates with max update minor 18`] = `
+{
+  error: "Fetching https://libs.example.com/foo@2 failed: 404 ",
+  ok: false,
+}
+`;
+
+snapshot[`updates with max update minor 19`] = `
+{
+  error: "Fetching https://libs.example.com/foo@2 failed: 404 ",
+  ok: false,
+}
+`;
+
+snapshot[`updates with max update minor 20`] = `
+{
+  error: "Fetching https://libs.example.com/foo@2 failed: 404 ",
+  ok: false,
+}
+`;
+
+snapshot[`updates with max update minor 21`] = `
+{
+  error: "Fetching https://libs.example.com/foo@2 failed: 404 ",
+  ok: false,
+}
+`;
+
+snapshot[`updates with max update minor 22`] = `
+{
+  error: "No minor version in @2 and max update is not major",
+  ok: false,
+}
+`;
+
+snapshot[`updates with max update minor 23`] = `
+{
+  error: "Fetching https://libs.example.com/foo@2 failed: 404 ",
+  ok: false,
+}
+`;
+
+snapshot[`updates with max update minor 24`] = `
+{
+  error: "Fetching https://libs.example.com/foo@2 failed: 404 ",
+  ok: false,
+}
+`;
+
+snapshot[`updates with max update minor 25`] = `
+{
+  error: "Fetching https://libs.example.com/foo@3 failed: 404 ",
+  ok: false,
+}
+`;
+
+snapshot[`updates with max update minor 26`] = `
+{
+  ok: true,
+  value: {
+    baseUrl: "https://libs.example.com/foo@0",
+    currentUrl: "https://libs.example.com/foo@0.1.2",
+    currentVersion: {
+      index: {
+        end: 34,
+        start: 28,
+      },
+      major: 0,
+      match: "@0.1.2",
+      minor: 1,
+      patch: 2,
+      prefix: "",
+      prerelease: null,
+    },
+    latestUrl: "https://libs.example.com/foo@0.10.20",
+    latestVersion: {
+      index: {
+        end: 36,
+        start: 28,
+      },
+      major: 0,
+      match: "@0.10.20",
+      minor: 10,
+      patch: 20,
+      prefix: "",
+      prerelease: null,
+    },
+    release: "major",
+  },
+}
+`;
+
+snapshot[`updates with max update minor 27`] = `
+{
+  ok: true,
+  value: {
+    baseUrl: "https://libs.example.com/foo@0",
+    currentUrl: "https://libs.example.com/foo@0.0.1",
+    currentVersion: {
+      index: {
+        end: 34,
+        start: 28,
+      },
+      major: 0,
+      match: "@0.0.1",
+      minor: 0,
+      patch: 1,
+      prefix: "",
+      prerelease: null,
+    },
+    latestUrl: "https://libs.example.com/foo@0.10.20",
+    latestVersion: {
+      index: {
+        end: 36,
+        start: 28,
+      },
+      major: 0,
+      match: "@0.10.20",
+      minor: 10,
+      patch: 20,
+      prefix: "",
+      prerelease: null,
+    },
+    release: "major",
+  },
+}
+`;
+
+snapshot[`updates with max update minor 28`] = `
+{
+  error: "Fetching https://libs.example.com/unknown@1 failed: 404 ",
+  ok: false,
+}
+`;
+
+snapshot[`updates with max update minor 29`] = `
+{
+  error: "Fetching https://not-exists.example.com/foo@1 failed: Error: Network error",
+  ok: false,
+}
+`;
+
+snapshot[`updates with max update minor 30`] = `
+{
+  error: "No redirect for https://no-redirect.example.com/foo@1",
+  ok: false,
+}
+`;
+
+snapshot[`updates with max update minor 31`] = `
+{
+  error: "Latest version @1.2 is not an exact version",
+  ok: false,
+}
+`;
+
+snapshot[`updates with max update patch 1`] = `
+{
+  ok: true,
+  value: null,
+}
+`;
+
+snapshot[`updates with max update patch 2`] = `
+{
+  ok: true,
+  value: null,
+}
+`;
+
+snapshot[`updates with max update patch 3`] = `
+{
+  ok: true,
+  value: null,
+}
+`;
+
+snapshot[`updates with max update patch 4`] = `
+{
+  ok: true,
+  value: null,
+}
+`;
+
+snapshot[`updates with max update patch 5`] = `
+{
+  error: "No major version in @x.x.x",
+  ok: false,
+}
+`;
+
+snapshot[`updates with max update patch 6`] = `
+{
+  error: "No minor version in @1 and max update is not major",
+  ok: false,
+}
+`;
+
+snapshot[`updates with max update patch 7`] = `
+{
+  error: "No minor version in @1.x.x and max update is not major",
+  ok: false,
+}
+`;
+
+snapshot[`updates with max update patch 8`] = `
+{
+  error: "No minor version in @v1 and max update is not major",
+  ok: false,
+}
+`;
+
+snapshot[`updates with max update patch 9`] = `
+{
+  error: "No patch version in @1.2 and max update is patch",
+  ok: false,
+}
+`;
+
+snapshot[`updates with max update patch 10`] = `
+{
+  error: "No patch version in @1.2.* and max update is patch",
+  ok: false,
+}
+`;
+
+snapshot[`updates with max update patch 11`] = `
+{
+  error: "No patch version in @v1.2 and max update is patch",
+  ok: false,
+}
+`;
+
+snapshot[`updates with max update patch 12`] = `
+{
+  ok: true,
+  value: {
+    baseUrl: "https://libs.example.com/foo@1.2",
+    currentUrl: "https://libs.example.com/foo@1.2.3",
+    currentVersion: {
+      index: {
+        end: 34,
+        start: 28,
+      },
+      major: 1,
+      match: "@1.2.3",
+      minor: 2,
+      patch: 3,
+      prefix: "",
+      prerelease: null,
+    },
+    latestUrl: "https://libs.example.com/foo@1.2.6",
+    latestVersion: {
+      index: {
+        end: 34,
+        start: 28,
+      },
+      major: 1,
+      match: "@1.2.6",
+      minor: 2,
+      patch: 6,
+      prefix: "",
+      prerelease: null,
+    },
+    release: "patch",
+  },
+}
+`;
+
+snapshot[`updates with max update patch 13`] = `
+{
+  ok: true,
+  value: {
+    baseUrl: "https://libs.example.com/foo@v1.2",
+    currentUrl: "https://libs.example.com/foo@v1.2.3",
+    currentVersion: {
+      index: {
+        end: 35,
+        start: 28,
+      },
+      major: 1,
+      match: "@v1.2.3",
+      minor: 2,
+      patch: 3,
+      prefix: "v",
+      prerelease: null,
+    },
+    latestUrl: "https://libs.example.com/foo@v1.2.6",
+    latestVersion: {
+      index: {
+        end: 35,
+        start: 28,
+      },
+      major: 1,
+      match: "@v1.2.6",
+      minor: 2,
+      patch: 6,
+      prefix: "v",
+      prerelease: null,
+    },
+    release: "patch",
+  },
+}
+`;
+
+snapshot[`updates with max update patch 14`] = `
+{
+  ok: true,
+  value: {
+    baseUrl: "https://libs.example.com/foo@1.2",
+    currentUrl: "https://libs.example.com/foo@1.2.3",
+    currentVersion: {
+      index: {
+        end: 34,
+        start: 28,
+      },
+      major: 1,
+      match: "@1.2.3",
+      minor: 2,
+      patch: 3,
+      prefix: "",
+      prerelease: null,
+    },
+    latestUrl: "https://libs.example.com/foo@1.2.6",
+    latestVersion: {
+      index: {
+        end: 34,
+        start: 28,
+      },
+      major: 1,
+      match: "@1.2.6",
+      minor: 2,
+      patch: 6,
+      prefix: "",
+      prerelease: null,
+    },
+    release: "patch",
+  },
+}
+`;
+
+snapshot[`updates with max update patch 15`] = `
+{
+  error: "Fetching https://libs.example.com/foo@1.2/index.js failed: 404 ",
+  ok: false,
+}
+`;
+
+snapshot[`updates with max update patch 16`] = `
+{
+  error: "Fetching https://libs.example.com/foo@1.2?bar=baz failed: 404 ",
+  ok: false,
+}
+`;
+
+snapshot[`updates with max update patch 17`] = `
+{
+  ok: true,
+  value: {
+    baseUrl: "https://libs.example.com/foo@1.2",
+    currentUrl: "https://libs.example.com/foo@1.2.3-beta",
+    currentVersion: {
+      index: {
+        end: 39,
+        start: 28,
+      },
+      major: 1,
+      match: "@1.2.3-beta",
+      minor: 2,
+      patch: 3,
+      prefix: "",
+      prerelease: "beta",
+    },
+    latestUrl: "https://libs.example.com/foo@1.2.6",
+    latestVersion: {
+      index: {
+        end: 34,
+        start: 28,
+      },
+      major: 1,
+      match: "@1.2.6",
+      minor: 2,
+      patch: 6,
+      prefix: "",
+      prerelease: null,
+    },
+    release: "patch",
+  },
+}
+`;
+
+snapshot[`updates with max update patch 18`] = `
+{
+  error: "Fetching https://libs.example.com/foo@2.2 failed: 404 ",
+  ok: false,
+}
+`;
+
+snapshot[`updates with max update patch 19`] = `
+{
+  error: "Fetching https://libs.example.com/foo@2.3 failed: 404 ",
+  ok: false,
+}
+`;
+
+snapshot[`updates with max update patch 20`] = `
+{
+  error: "Fetching https://libs.example.com/foo@2.3 failed: 404 ",
+  ok: false,
+}
+`;
+
+snapshot[`updates with max update patch 21`] = `
+{
+  error: "No patch version in @2.3 and max update is patch",
+  ok: false,
+}
+`;
+
+snapshot[`updates with max update patch 22`] = `
+{
+  error: "No minor version in @2 and max update is not major",
+  ok: false,
+}
+`;
+
+snapshot[`updates with max update patch 23`] = `
+{
+  error: "Fetching https://libs.example.com/foo@2.3 failed: 404 ",
+  ok: false,
+}
+`;
+
+snapshot[`updates with max update patch 24`] = `
+{
+  error: "Fetching https://libs.example.com/foo@2.4 failed: 404 ",
+  ok: false,
+}
+`;
+
+snapshot[`updates with max update patch 25`] = `
+{
+  error: "Fetching https://libs.example.com/foo@3.4 failed: 404 ",
+  ok: false,
+}
+`;
+
+snapshot[`updates with max update patch 26`] = `
+{
+  ok: true,
+  value: {
+    baseUrl: "https://libs.example.com/foo@0.1",
+    currentUrl: "https://libs.example.com/foo@0.1.2",
+    currentVersion: {
+      index: {
+        end: 34,
+        start: 28,
+      },
+      major: 0,
+      match: "@0.1.2",
+      minor: 1,
+      patch: 2,
+      prefix: "",
+      prerelease: null,
+    },
+    latestUrl: "https://libs.example.com/foo@0.1.1000",
+    latestVersion: {
+      index: {
+        end: 37,
+        start: 28,
+      },
+      major: 0,
+      match: "@0.1.1000",
+      minor: 1,
+      patch: 1000,
+      prefix: "",
+      prerelease: null,
+    },
+    release: "minor",
+  },
+}
+`;
+
+snapshot[`updates with max update patch 27`] = `
+{
+  ok: true,
+  value: {
+    baseUrl: "https://libs.example.com/foo@0.0",
+    currentUrl: "https://libs.example.com/foo@0.0.1",
+    currentVersion: {
+      index: {
+        end: 34,
+        start: 28,
+      },
+      major: 0,
+      match: "@0.0.1",
+      minor: 0,
+      patch: 1,
+      prefix: "",
+      prerelease: null,
+    },
+    latestUrl: "https://libs.example.com/foo@0.0.100",
+    latestVersion: {
+      index: {
+        end: 36,
+        start: 28,
+      },
+      major: 0,
+      match: "@0.0.100",
+      minor: 0,
+      patch: 100,
+      prefix: "",
+      prerelease: null,
+    },
+    release: "major",
+  },
+}
+`;
+
+snapshot[`updates with max update patch 28`] = `
+{
+  error: "Fetching https://libs.example.com/unknown@1.2 failed: 404 ",
+  ok: false,
+}
+`;
+
+snapshot[`updates with max update patch 29`] = `
+{
+  error: "Fetching https://not-exists.example.com/foo@1.2 failed: Error: Network error",
+  ok: false,
+}
+`;
+
+snapshot[`updates with max update patch 30`] = `
+{
+  error: "No redirect for https://no-redirect.example.com/foo@1.2",
+  ok: false,
+}
+`;
+
+snapshot[`updates with max update patch 31`] = `
+{
+  error: "Latest version @x.x.x is not an exact version",
+  ok: false,
+}
+`;

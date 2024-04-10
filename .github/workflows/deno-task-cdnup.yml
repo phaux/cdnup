@@ -1,0 +1,23 @@
+name: Update CDN dependencies
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * 0"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: denoland/setup-deno@v1
+      - run: deno task cdnup
+      - uses: peter-evans/create-pull-request@v6
+        with:
+          branch: "update-cdn-deps"
+          commit-message: "chore: update CDN dependencies"
+          title: "chore: update CDN dependencies"

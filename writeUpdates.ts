@@ -1,24 +1,27 @@
 import { sortBy } from "https://deno.land/std@0.221.0/collections/sort_by.ts";
 import { info } from "https://deno.land/std@0.221.0/log/info.ts";
-import { format } from "https://deno.land/std@0.221.0/semver/format.ts";
 import MagicString from "https://esm.sh/magic-string@0.30.8";
-import { UpdateEntry } from "./listUpdates.ts";
+import { Update } from "./listUpdates.ts";
 
-export async function writeUpdates(updates: UpdateEntry[], options: {
-  write: boolean;
-  interactive: boolean;
-}) {
+export async function writeUpdates(
+  updates: Iterable<Update>,
+  options: {
+    write: boolean;
+    interactive: boolean;
+  },
+) {
+  const updatesArray = Array.from(updates);
   const sortedUpdates = Map.groupBy(
     sortBy(
-      updates,
+      updatesArray,
       (update) =>
-        `${update.filePath}:${update.startIndex.toFixed(0).padStart(9, "0")}`,
+        `${update.filePath}:${update.index.start.toFixed(0).padStart(9, "0")}`,
     ),
     (update) => update.filePath,
   );
 
   info(
-    `Found ${updates.length} updates in ${sortedUpdates.size} files.`,
+    `Found ${updatesArray.length} updates in ${sortedUpdates.size} files.`,
   );
 
   for (const [filePath, fileUpdates] of sortedUpdates.entries()) {
@@ -29,10 +32,11 @@ export async function writeUpdates(updates: UpdateEntry[], options: {
     );
 
     for (const update of fileUpdates) {
-      const message =
-        `${update.filePath}:${update.start.line}\t${update.update.baseUrl}\t${
-          format(update.update.version)
-        } -> ${format(update.update.latestVersion)} (${update.update.release})`;
+      const message = `${update.filePath}:${update.location.line}\t` +
+        `${update.update.baseUrl}\t` +
+        `${update.update.currentVersion.major}.${update.update.currentVersion.minor}.${update.update.currentVersion.patch} -> ` +
+        `${update.update.latestVersion.major}.${update.update.latestVersion.minor}.${update.update.latestVersion.patch} ` +
+        `(${update.update.release})`;
 
       let write;
       if (options.write && options.interactive) {
@@ -44,8 +48,8 @@ export async function writeUpdates(updates: UpdateEntry[], options: {
 
       if (write) {
         fileText.update(
-          update.startIndex,
-          update.endIndex,
+          update.index.start,
+          update.index.end,
           update.update.latestUrl,
         );
       }
