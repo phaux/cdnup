@@ -1,8 +1,8 @@
-import { parseArgs } from "https://deno.land/std@0.221.0/cli/parse_args.ts";
-import { bold, underline } from "https://deno.land/std@0.221.0/fmt/colors.ts";
-import { error } from "https://deno.land/std@0.221.0/log/error.ts";
-import { setup } from "https://deno.land/std@0.221.0/log/setup.ts";
-import { globToRegExp } from "https://deno.land/std@0.221.0/path/glob_to_regexp.ts";
+import { parseArgs } from "https://deno.land/std@0.222.1/cli/parse_args.ts";
+import { bold, underline } from "https://deno.land/std@0.222.1/fmt/colors.ts";
+import { error } from "https://deno.land/std@0.222.1/log/error.ts";
+import { setup } from "https://deno.land/std@0.222.1/log/setup.ts";
+import { globToRegExp } from "https://deno.land/std@0.222.1/path/glob_to_regexp.ts";
 import { z } from "https://esm.sh/zod@3.22.4";
 import { RELEASE_TYPES } from "./checkCdnUpdate.ts";
 import { ListDirUpdatesOptions, listUpdates } from "./listUpdates.ts";
@@ -50,7 +50,7 @@ ${bold(`OPTIONS`)}
     Additional file extensions to check when recursively walking directories.
     Can be comma-separated or specified multiple times.
     By default, ${new Intl.ListFormat("en").format(defaultExtensions)} files are checked.
-    See: https://deno.land/std@0.221.0/fs/walk.ts?s=WalkOptions#prop_exts
+    See: https://deno.land/std@0.222.1/fs/walk.ts
 
   ${bold(`-s`)} ${underline(`PATH`)}, ${bold(`--skip`)} ${underline(`PATH`)}
     Additional paths to skip when recursively walking directories.
@@ -58,8 +58,8 @@ ${bold(`OPTIONS`)}
     Supports glob syntax.
     By default, ${new Intl.ListFormat("en").format(defaultSkipPaths)} paths are ignored.
     See:
-    https://deno.land/std@0.221.0/path/glob_to_regexp.ts?s=globToRegExp
-    https://deno.land/std@0.221.0/fs/walk.ts?s=WalkOptions#prop_skip
+    https://deno.land/std@0.222.1/path/glob_to_regexp.ts
+    https://deno.land/std@0.222.1/fs/walk.ts
 
   ${bold(`-b`)} ${underline(`DOMAIN`)}, ${bold(`--block`)} ${underline(`DOMAIN`)}
     Domains to never check for updates.

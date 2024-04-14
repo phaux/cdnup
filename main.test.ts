@@ -1,7 +1,7 @@
-import { assertEquals } from "https://deno.land/std@0.221.0/assert/assert_equals.ts";
-import { copy } from "https://deno.land/std@0.221.0/fs/mod.ts";
-import { join } from "https://deno.land/std@0.221.0/path/join.ts";
-import { assertSnapshot } from "https://deno.land/std@0.221.0/testing/snapshot.ts";
+import { assertEquals } from "https://deno.land/std@0.222.1/assert/assert_equals.ts";
+import { copy } from "https://deno.land/std@0.222.1/fs/mod.ts";
+import { join } from "https://deno.land/std@0.222.1/path/join.ts";
+import { assertSnapshot } from "https://deno.land/std@0.222.1/testing/snapshot.ts";
 import { createFakeFetch, createStaticUrlHandler } from "./createFakeFetch.ts";
 import { runCdnUp } from "./main.ts";
 
