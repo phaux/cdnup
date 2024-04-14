@@ -8,6 +8,9 @@
     "fixtures"
   ],
   "fmt": {
+    "exclude": [
+      "CHANGELOG.md"
+    ],
     "proseWrap": "preserve"
   },
   "lint": {
