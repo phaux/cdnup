@@ -39,11 +39,11 @@ export async function checkCdnUpdate(
   url: string,
   options?: CheckUpdateOptions,
 ): Promise<CdnUpdate | null> {
-  const currentUrl = new URL(url).href;
+  const currentUrl = new URL(url);
   const maxUpdate = options?.maxUpdate ?? "major";
 
   // parse current version from url
-  const currentVersion = parseCdnVersion(currentUrl);
+  const currentVersion = parseCdnVersion(currentUrl.href);
   if (currentVersion == null) {
     throw new Error(`No version in ${currentUrl}`);
   }
@@ -73,9 +73,11 @@ export async function checkCdnUpdate(
         `@${currentVersion.prefix}${currentVersion.major}.${currentVersion.minor}`,
     )
     .exhaustive();
-  const baseUrl = currentUrl.substring(0, currentVersion.index.start) +
-    baseVersion +
-    currentUrl.substring(currentVersion.index.end);
+  const baseUrl = new URL(
+    currentUrl.href.substring(0, currentVersion.index.start) +
+      baseVersion +
+      currentUrl.href.substring(currentVersion.index.end),
+  );
 
   // fetch base url and look for redirect
   const localFetch = options?.fetch ?? globalThis.fetch;
@@ -91,13 +93,15 @@ export async function checkCdnUpdate(
       `Fetching ${baseUrl} failed: ${response.status} ${response.statusText}`,
     );
   }
-  const latestUrl = new URL(response.url, baseUrl).href;
-  if (latestUrl === baseUrl) {
+  const latestUrl = new URL(response.url);
+  if (!latestUrl.search) latestUrl.search = currentUrl.search;
+  if (!latestUrl.hash) latestUrl.hash = currentUrl.hash;
+  if (latestUrl.href === baseUrl.href) {
     throw new Error(`No redirect for ${baseUrl}`);
   }
 
   // parse latest version from redirect url
-  const latestVersion = parseCdnVersion(latestUrl);
+  const latestVersion = parseCdnVersion(latestUrl.href);
   if (latestVersion == null) {
     throw new Error(`No version in latest URL ${latestUrl}`);
   }
@@ -152,9 +156,9 @@ export async function checkCdnUpdate(
 
   // return update info
   return {
-    baseUrl,
-    currentUrl,
-    latestUrl,
+    baseUrl: baseUrl.href,
+    currentUrl: currentUrl.href,
+    latestUrl: latestUrl.href,
     currentVersion,
     latestVersion,
     release,

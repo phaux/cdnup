@@ -8,17 +8,20 @@ export function createFakeFetch(
     const request = new Request(url, init);
     const redirectMode = init?.redirect ?? "follow";
     const response = await handler(request);
-    const isRedirect = response.status >= 300 && response.status < 400;
-    if (redirectMode === "error" && isRedirect) {
-      throw new Error(`Received redirect with ${response.status} status code`);
-    }
-    if (redirectMode === "follow" && isRedirect) {
-      const nextLocation = response.headers.get("Location") ?? "";
-      const nextUrl = new URL(nextLocation, request.url);
-      if (nextUrl.href === request.url) {
-        throw new Error("Infinite redirect loop");
+    if (response.status >= 300 && response.status < 400) {
+      if (redirectMode === "error") {
+        throw new Error(
+          `Received redirect with ${response.status} status code`,
+        );
       }
-      return fakeFetch(nextUrl, init);
+      if (redirectMode === "follow") {
+        const nextLocation = response.headers.get("Location") ?? "";
+        const nextUrl = new URL(nextLocation, request.url);
+        if (nextUrl.href === request.url) {
+          throw new Error("Infinite redirect loop");
+        }
+        return fakeFetch(nextUrl, init);
+      }
     }
     return new FakeResponse(request.url, response.body, response);
   };
