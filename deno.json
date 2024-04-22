@@ -20,6 +20,7 @@
       ]
     }
   },
+  "lock": false,
   "tasks": {
     "cdnup": "deno run --allow-read --allow-write=. --allow-net main.ts --skip '**/fixtures' --skip '**/coverage' --block '*.example.com' -w",
     "snapshot": "deno test --allow-read --allow-write=/tmp,__snapshots__ -- -u",
