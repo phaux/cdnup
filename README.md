@@ -23,7 +23,7 @@ When not specified, the current directory is checked recursively.
 - `-i`, `--interactive`: Run in interactive mode. Ask for confirmation before writing each change.
 - `-e EXT`, `--ext EXT`: File extensions to check when recursively walking directories.
 - `-s PATH`, `--skip PATH`: Paths to skip when recursively walking directories.
-- `-b DOMAIN`, `--block DOMAIN`: Domains to never check for updates.
+- `-b URL`, `--block URL`: URL prefixes to never check for updates.
 - `--max-update RELEASE`: Try to find updates up to the specified release type.
 
 ## Example

@@ -224,14 +224,28 @@ Deno.test("writes updates with skip paths specified", async (t) => {
 });
 
 Deno.test("writes updates with blocked domains specified", async (t) => {
-  const output = await testFixture([
-    "-w",
-    "--block",
-    "mods.example.com",
-  ], redirects);
-  assertEquals(
-    await testFixture(["-w", "-b", "mods.example.com"], redirects),
-    output,
-  );
-  await assertSnapshot(t, output);
+  {
+    const output = await testFixture([
+      "-w",
+      "--block",
+      "https://mods.example.com",
+    ], redirects);
+    assertEquals(
+      await testFixture(["-w", "-b", "https://mods.example.com"], redirects),
+      output,
+    );
+    // TODO: disallow protocol-less URLs in next major version
+    assertEquals(
+      await testFixture(["-w", "-b", "mods.example.com"], redirects),
+      output,
+    );
+    await assertSnapshot(t, output);
+  }
+  {
+    const output = await testFixture(
+      ["-w", "-b", "https://*.example.com"],
+      redirects,
+    );
+    await assertSnapshot(t, output);
+  }
 });
