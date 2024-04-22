@@ -18,7 +18,7 @@ const urlRegexp =
   /\bhttps?:\/\/[\w\d.-]+\/[\w\d!#%&*?@^<=>/[\]:.~+-]*[\w\d!#&*?@^=/[\]:~+-]/dgi;
 
 export interface ListFileUpdatesOptions extends CheckUpdateOptions {
-  blockDomains?: RegExp[] | undefined;
+  blockUrls?: RegExp[] | undefined;
   memoize?: boolean | undefined;
   onError?:
     | ((filePath: string, url: string | undefined, error: Error) => void)
@@ -101,12 +101,7 @@ export async function* listFileUpdates(
 
       if (!url.match(versionRegexp)) return;
 
-      try {
-        const domain = new URL(url).hostname;
-        if (options?.blockDomains?.some((re) => re.test(domain))) {
-          return;
-        }
-      } catch {
+      if (options?.blockUrls?.some((re) => url.match(re))) {
         return;
       }
 

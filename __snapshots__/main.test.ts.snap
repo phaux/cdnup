@@ -4264,3 +4264,61 @@ snapshot[`writes updates with blocked domains specified 1`] = `
   },
 }
 `;
+
+snapshot[`writes updates with blocked domains specified 2`] = `
+{
+  content: {
+    "help.md": [
+      "Check out [lib](https://libs.example.com/lib@1.0.0/mod.js).",
+    ],
+    "help.txt": [
+      "Check out https://libs.example.com/lib@1.0.0/mod.js.",
+    ],
+    "tasks.ini": [
+      'start="deno run https://mods.example.com/x/example@v1.2.3/mod.ts"',
+    ],
+    "tasks.json": [
+      '{ "start": "deno run https://mods.example.com/x/example@v1/mod.ts" }',
+    ],
+    "tasks.yml": [
+      "start: deno run https://mods.example.com/x/example@v2/mod.ts",
+    ],
+    node_modules: {
+      "foo.js": [
+        'import "https://libs.example.com/lib@1.0.0/mod.js";',
+      ],
+    },
+    src: {
+      "App.jsx": [
+        'import * as React from "https://libs.example.com/react@17.0.2";',
+      ],
+      "App.tsx": [
+        'import * as React from "https://libs.example.com/preact@10.0.0";',
+      ],
+      "bar.ts": [
+        'import("https://libs.example.com/lib@2.0.0/mod.js");',
+        'import("https://libs.example.com/lib@1.0.0/mod.js");',
+      ],
+      "foo.js": [
+        'import "https://libs.example.com/lib@1.0.0/mod.js";',
+        'import "https://libs.example.com/unknown@1.0.0/mod.js";',
+      ],
+    },
+    static: {
+      "page.html": [
+        '<script src="https://libs.example.com/jquery@3.5/dist/jquery.min.js"></script>',
+        '<link rel="stylesheet" href="https://libs.example.com/bootstrap@4.5/dist/bootstrap.min.css">',
+        '<img src="https://cdn.example.com/dist/img/logo.png" alt="Logo">',
+      ],
+      "style.css": [
+        '@import "https://libs.example.com/bootstrap@4/dist/bootstrap.min.css";',
+        "header { background-image: url('https://cdn.example.com/dist/img/logo.jpg'); }",
+      ],
+    },
+  },
+  errors: Set(0) {},
+  result: {
+    updates: Set(0) {},
+  },
+}
+`;

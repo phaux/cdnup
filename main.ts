@@ -50,7 +50,7 @@ ${bold(`OPTIONS`)}
     Additional file extensions to check when recursively walking directories.
     Can be comma-separated or specified multiple times.
     By default, ${new Intl.ListFormat("en").format(defaultExtensions)} files are checked.
-    See: https://deno.land/std@0.222.1/fs/walk.ts
+    See: https://deno.land/std@0.222.1/fs/walk.ts?s=WalkOptions#prop_exts
 
   ${bold(`-s`)} ${underline(`PATH`)}, ${bold(`--skip`)} ${underline(`PATH`)}
     Additional paths to skip when recursively walking directories.
@@ -58,13 +58,14 @@ ${bold(`OPTIONS`)}
     Supports glob syntax.
     By default, ${new Intl.ListFormat("en").format(defaultSkipPaths)} paths are ignored.
     See:
-    https://deno.land/std@0.222.1/path/glob_to_regexp.ts
-    https://deno.land/std@0.222.1/fs/walk.ts
+    https://deno.land/std@0.222.1/path/glob_to_regexp.ts?s=globToRegExp
+    https://deno.land/std@0.222.1/fs/walk.ts?s=WalkOptions#prop_skip
 
-  ${bold(`-b`)} ${underline(`DOMAIN`)}, ${bold(`--block`)} ${underline(`DOMAIN`)}
-    Domains to never check for updates.
+  ${bold(`-b`)} ${underline(`URL`)}, ${bold(`--block`)} ${underline(`URL`)}
+    URL prefixes to never check for updates.
     Can be specified multiple times.
     Supports glob syntax.
+    Example: https://*.example.com
 
   ${bold(`--max-update`)} ${underline(`RELEASE`)}
     Try to find updates up to the specified release type.
@@ -83,16 +84,16 @@ export async function runCdnUp(
 ) {
   const options = parseArgs(args, {
     boolean: ["help", "interactive", "verbose", "write"],
-    string: ["extensions", "skipPaths", "blockDomains", "maxUpdate"],
-    collect: ["extensions", "skipPaths", "blockDomains"],
+    string: ["extensions", "skipPaths", "blockUrls", "maxUpdate"],
+    collect: ["extensions", "skipPaths", "blockUrls"],
     alias: {
       help: ["h"],
       interactive: ["i"],
       verbose: ["v"],
       write: ["w"],
-      extensions: ["ext", "e"],
-      skipPaths: ["skip", "s"],
-      blockDomains: ["block", "b"],
+      extensions: ["extensions", "extension", "exts", "ext", "e"],
+      skipPaths: ["skip-path", "skip", "s"],
+      blockUrls: ["block-url", "block", "b"],
       maxUpdate: ["max-update", "u"],
     },
   });
@@ -106,8 +107,20 @@ export async function runCdnUp(
   const skipPaths = options.skipPaths
     .concat(defaultSkipPaths)
     .map((path) => globToRegExp(path));
-  const blockDomains = options.blockDomains
-    .map((domain) => globToRegExp(domain));
+  const blockUrls = options.blockUrls
+    .map((url) =>
+      new RegExp(
+        // can start with HTTP protocol (TODO: require explicit protocol in next major version)
+        "^(?:https?://)?" +
+          (
+            globToRegExp(url, { os: "linux" })
+              // remove `^` and `$` from the regexp
+              .source.slice(1, -1)
+          ) +
+          // can end with anything but only on word boundary or non-word character
+          "(?=\\b|\\W|$)",
+      )
+    );
   const maxUpdate = z.enum(RELEASE_TYPES).optional()
     .parse(options.maxUpdate);
 
@@ -134,7 +147,7 @@ export async function runCdnUp(
           maxUpdate,
           exts: extensions,
           skip: skipPaths,
-          blockDomains,
+          blockUrls,
           ...overrideOptions,
         },
       )),
