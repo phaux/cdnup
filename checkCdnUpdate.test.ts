@@ -1,4 +1,4 @@
-import { assertSnapshot } from "https://deno.land/std@0.222.1/testing/snapshot.ts";
+import { assertSnapshot } from "https://deno.land/std@0.224.0/testing/snapshot.ts";
 import { checkCdnUpdate } from "./checkCdnUpdate.ts";
 import { createFakeFetch, createStaticUrlHandler } from "./createFakeFetch.ts";
 
