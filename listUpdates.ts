@@ -1,7 +1,7 @@
-import { walk, WalkOptions } from "https://deno.land/std@0.222.1/fs/walk.ts";
-import { info } from "https://deno.land/std@0.222.1/log/info.ts";
-import { AsyncIterableX } from "https://esm.sh/ix@5.0.0/asynciterable/asynciterablex";
-import { flatMap } from "https://esm.sh/ix@5.0.0/asynciterable/operators/flatmap";
+import { walk, WalkOptions } from "https://deno.land/std@0.224.0/fs/walk.ts";
+import { info } from "https://deno.land/std@0.224.0/log/info.ts";
+import { AsyncIterableX } from "https://esm.sh/ix@7.0.0/asynciterable/asynciterablex";
+import { flatMap } from "https://esm.sh/ix@7.0.0/asynciterable/operators/flatmap";
 import {
   LinesAndColumns,
   SourceLocation,
