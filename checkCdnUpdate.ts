@@ -1,6 +1,6 @@
 import { info } from "https://deno.land/std@0.224.0/log/info.ts";
 import memoize from "https://esm.sh/memoizee@0.4.17";
-import { match } from "https://esm.sh/ts-pattern@5.7.0";
+import { match } from "https://esm.sh/ts-pattern@5.7.1";
 
 export const RELEASE_TYPES = ["patch", "minor", "major"] as const;
 
