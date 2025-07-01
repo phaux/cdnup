@@ -3,7 +3,7 @@ import { bold, underline } from "https://deno.land/std@0.224.0/fmt/colors.ts";
 import { error } from "https://deno.land/std@0.224.0/log/error.ts";
 import { setup } from "https://deno.land/std@0.224.0/log/setup.ts";
 import { globToRegExp } from "https://deno.land/std@0.224.0/path/glob_to_regexp.ts";
-import { z } from "https://esm.sh/zod@3.25.43";
+import { z } from "https://esm.sh/zod@3.25.67";
 import { RELEASE_TYPES } from "./checkCdnUpdate.ts";
 import { ListDirUpdatesOptions, listUpdates } from "./listUpdates.ts";
 import { writeUpdates } from "./writeUpdates.ts";
