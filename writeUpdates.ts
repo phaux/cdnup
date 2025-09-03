@@ -1,6 +1,6 @@
 import { sortBy } from "https://deno.land/std@0.224.0/collections/sort_by.ts";
 import { info } from "https://deno.land/std@0.224.0/log/info.ts";
-import MagicString from "https://esm.sh/magic-string@0.30.17";
+import MagicString from "https://esm.sh/magic-string@0.30.18";
 import { Update } from "./listUpdates.ts";
 
 export async function writeUpdates(
